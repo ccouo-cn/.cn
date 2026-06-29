@@ -11,32 +11,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-function tg_get($url) {
-    $opts = [
-        'http' => [
-            'method' => 'GET',
-            'ignore_errors' => true,
-        ],
-        'ssl' => [
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-        ],
-    ];
-    $ctx = stream_context_create($opts);
-    return file_get_contents($url, false, $ctx);
-}
+function tg_request($url, $isPost = false) {
+    $headers = [];
+    foreach (getallheaders() as $k => $v) {
+        // 不转发 host 头
+        if (strtolower($k) !== 'host') {
+            $headers[] = "$k: $v";
+        }
+    }
 
-function tg_post($url, $body, $contentType) {
-    global $botToken;
     $opts = [
         'http' => [
-            'method' => 'POST',
-            'header' => "Content-Type: $contentType\r\n",
-            'content' => $body,
-            'ignore_errors' => true,
+            'method'          => $isPost ? 'POST' : 'GET',
+            'header'          => implode("\r\n", $headers),
+            'content'         => $isPost ? file_get_contents('php://input') : null,
+            'ignore_errors'   => true,
         ],
         'ssl' => [
-            'verify_peer' => false,
+            'verify_peer'      => false,
             'verify_peer_name' => false,
         ],
     ];
@@ -53,7 +45,7 @@ if (isset($_GET['c']) && $_GET['c'] === 'true') {
         exit;
     }
 
-    $resp = tg_get("https://api.telegram.org/bot{$botToken}/getFile?file_id=" . urlencode($fileId));
+    $resp = tg_request("https://api.telegram.org/bot{$botToken}/getFile?file_id=" . urlencode($fileId), false);
     $data = json_decode($resp, true);
     if (!($data['ok'] ?? false)) {
         http_response_code(502);
@@ -70,8 +62,8 @@ if (isset($_GET['c']) && $_GET['c'] === 'true') {
 $method = $_GET['action'] ?? 'sendDocument';
 $target = "https://api.telegram.org/bot{$botToken}/" . $method;
 
-$contentType = $_SERVER['CONTENT_TYPE'] ?? 'application/octet-stream';
-$response = tg_post($target, file_get_contents('php://input'), $contentType);
+$isPost = in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT', 'PATCH']);
+$response = tg_request($target, $isPost);
 
 // 取状态码
 $statusLine = $http_response_header[0] ?? '';
@@ -83,7 +75,7 @@ if ($method === 'sendDocument') {
     $json = json_decode($response, true);
     $fileId = $json['result']['document']['file_id'] ?? '';
     if ($fileId !== '') {
-        $fileResp = tg_get("https://api.telegram.org/bot{$botToken}/getFile?file_id=" . urlencode($fileId));
+        $fileResp = tg_request("https://api.telegram.org/bot{$botToken}/getFile?file_id=" . urlencode($fileId), false);
         $fileData = json_decode($fileResp, true);
         if (($fileData['ok'] ?? false) && isset($fileData['result']['file_path'])) {
             header('Content-Type: text/plain; charset=utf-8');
@@ -93,11 +85,10 @@ if ($method === 'sendDocument') {
     }
 }
 
-// 原样返回
+// 原样返回 Telegram 响应
 foreach ($http_response_header as $h) {
     if (stripos($h, 'Content-Type:') === 0) {
         header($h);
     }
 }
 echo $response;
-
