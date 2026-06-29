@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户反馈</title>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/ccouo-cn/css@main/a.css">
+
+
+</head>
+<body>
+
+<div class="card">
+    <div class="icon-wrap">
+        <i class="fa-solid fa-wind"></i>
+    </div>
+    <h2>用户反馈</h2>
+    <p class="subtitle">每一份声音都在指引我们前行</p>
+
+    <label>反馈内容</label>
+    <textarea id="msg" placeholder="请简要描述你遇到的问题或建议...（最多50字）" maxlength="50"></textarea>
+    <div class="counter-wrap">
+        <span></span>
+        <span class="counter"><span id="count">0</span> / 50</span>
+    </div>
+
+    <button class="btn" id="btn" onclick="send()">
+        <i class="fa-solid fa-paper-plane"></i> 提交反馈
+    </button>
+    <div id="result"></div>
+</div>
+
+<script src="//cdn.jsdelivr.net/gh/ccouo-cn/JavaScript@main/a.js">
+
+</script >
+
+</body>
+</html>
+
