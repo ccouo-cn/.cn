@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>获取 Telegram ChatID 与用户名</title>
+<link rel="stylesheet" href="0e2v81w5h.css">
+</head>
+<body>
+
+<div class="card">
+  <h3>Telegram 用户识别</h3>
+  <p class="subtitle">获取你的 Chat ID 和用户名，用于对接 API 中转站</p>
+
+  <!-- 随机 ID -->
+  <div class="section">
+    <div class="section-title">你的随机 56 位用户 ID</div>
+    <div class="row">
+      <span class="value" id="randomId"></span>
+      <button class="copy-btn" onclick="copyText('randomId', this)">复制</button>
+    </div>
+  </div>
+
+  <!-- 二维码区域 -->
+  <div class="qr-section">
+    <p>
+      第一步：扫描下方二维码<br>或在 Telegram 搜索 <b>@ccouo666_bot</b> 添加机器人
+    </p>
+    <img class="qr-img" src="https://cdn.jsdelivr.net/gh/ccouo-cn/image@main/Screenshot_2026-06-30-09-43-05-399_org.telegram.messenger-edit.jpg" alt="机器人二维码">
+    <div class="bot-name">@ccouo666_bot</div>
+  </div>
+
+  <!-- 操作步骤 -->
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>复制上方 56 位 ID，发送给机器人 <b>@ccouo666_bot</b></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>确认已发送成功后，点击下方按钮</div>
+    </div>
+  </div>
+
+  <!-- 确认按钮 -->
+  <button class="btn" id="mainBtn" onclick="matchUser()">我已发送，确认匹配</button>
+
+  <!-- 结果展示 -->
+  <div class="result-box" id="resultBox">
+    <h4>匹配结果</h4>
+    <div id="result"></div>
+  </div>
+</div>
+
+<script src="80wfvcnt7vnsi5v9ityzn1.js"></script>
+
+
+
+</body></html>
