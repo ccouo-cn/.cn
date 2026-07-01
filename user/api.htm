@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Telegram 中转 API 调用面板</title>
+
+<!-- highlight.js 代码高亮 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github-dark.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ccouo-cn/css@main/mkkzzrclq9mbeweytz4184anta.css">
+</head>
+<body>
+
+<div class="box">
+<h2>Telegram 中转 API 调用面板</h2>
+<p class="desc">
+  所有请求均通过中转站 <b>https://api.yuzusoft.pw/tg.go</b> 真实调用 Telegram Bot API。<br>
+  每个功能都有对应的 JS 调用源码，可展开查看并一键复制。
+</p>
+
+<!-- 获取 Chat ID -->
+<div class="get-id">
+  <p>不知道自己的 Chat ID？<br><b>点击右侧按钮获取</b></p>
+  <a href="./api/tguser.htm" target="_blank">获取我的 Chat ID</a>
+</div>
+
+<!-- 公共输入 -->
+<label>Chat ID（你的）</label>
+<input id="chatId" placeholder="例如 8502329570">
+
+<label>发送内容（文字用）</label>
+<textarea id="text" rows="2" placeholder="要发送的文字"></textarea>
+
+<!-- ===== 发消息 ===== -->
+<div class="section">
+  <h3>发消息 <span class="tag">action=sendMessage</span></h3>
+  <p class="hint">向指定 Chat ID 发送一段文字消息。</p>
+  <div class="row">
+    <button onclick="sendMessage()">调用发送</button>
+    <button class="secondary" onclick="toggleCode('msgCode')">显示 / 隐藏 JS 源码</button>
+  </div>
+  <div id="msgCode" class="code-area">
+    <div class="code-header">
+      <span>JavaScript 调用源码</span>
+      <button onclick="copyCode('msgCode')">复制代码</button>
+    </div>
+    <pre><code class="language-javascript" id="msgCodeInner"></code></pre>
+  </div>
+  <div class="result-area"><pre id="msgResult"></pre></div>
+</div>
+
+<!-- ===== 发位置 ===== -->
+<div class="section">
+  <h3>发位置 <span class="tag">action=sendLocation</span></h3>
+  <p class="hint">向指定 Chat ID 发送一个地理位置坐标。</p>
+  <label>纬度 latitude</label>
+  <input id="lat" value="39.9087">
+  <label>经度 longitude</label>
+  <input id="lng" value="116.3975">
+  <div class="row">
+    <button onclick="sendLocation()">调用发送</button>
+    <button class="secondary" onclick="toggleCode('locCode')">显示 / 隐藏 JS 源码</button>
+  </div>
+  <div id="locCode" class="code-area">
+    <div class="code-header">
+      <span>JavaScript 调用源码</span>
+      <button onclick="copyCode('locCode')">复制代码</button>
+    </div>
+    <pre><code class="language-javascript" id="locCodeInner"></code></pre>
+  </div>
+  <div class="result-area"><pre id="locResult"></pre></div>
+</div>
+
+<!-- ===== 发文件 ===== -->
+<div class="section">
+  <h3>发文件 / 图片 <span class="tag">action=sendDocument</span></h3>
+  <p class="hint">通过 FormData 上传文件，返回文件名如 file_5.jpg。</p>
+  <label>选择文件</label>
+  <input type="file" id="fileInput">
+  <div class="row">
+    <button onclick="sendFile()">调用发送</button>
+    <button class="secondary" onclick="toggleCode('fileCode')">显示 / 隐藏 JS 源码</button>
+  </div>
+  <div id="fileCode" class="code-area">
+    <div class="code-header">
+      <span>JavaScript 调用源码</span>
+      <button onclick="copyCode('fileCode')">复制代码</button>
+    </div>
+    <pre><code class="language-javascript" id="fileCodeInner"></code></pre>
+  </div>
+  <div class="result-area"><pre id="fileResult"></pre></div>
+</div>
+
+<!-- ===== 发图片 ===== -->
+<div class="section">
+  <h3>发图片 <span class="tag">action=sendPhoto</span></h3>
+  <p class="hint">通过 FormData 上传图片，以照片形式展示（非文件）。</p>
+  <label>选择图片</label>
+  <input type="file" id="photoInput" accept="image/*">
+  <div class="row">
+    <button onclick="sendPhoto()">调用发送</button>
+    <button class="secondary" onclick="toggleCode('photoCode')">显示 / 隐藏 JS 源码</button>
+  </div>
+  <div id="photoCode" class="code-area">
+    <div class="code-header">
+      <span>JavaScript 调用源码</span>
+      <button onclick="copyCode('photoCode')">复制代码</button>
+    </div>
+    <pre><code class="language-javascript" id="photoCodeInner"></code></pre>
+  </div>
+  <div class="result-area"><pre id="photoResult"></pre></div>
+</div>
+
+<!-- ===== 发选择按钮 ===== -->
+<div class="section">
+  <h3>发选择按钮 <span class="tag">action=sendMessage + reply_markup</span></h3>
+  <p class="hint">发送一条带 Inline Keyboard 的消息，用户可点击按钮。</p>
+  <div class="row">
+    <button onclick="sendKeyboard()">调用发送</button>
+    <button class="secondary" onclick="toggleCode('kbCode')">显示 / 隐藏 JS 源码</button>
+  </div>
+  <div id="kbCode" class="code-area">
+    <div class="code-header">
+      <span>JavaScript 调用源码</span>
+      <button onclick="copyCode('kbCode')">复制代码</button>
+    </div>
+    <pre><code class="language-javascript" id="kbCodeInner"></code></pre>
+  </div>
+  <div class="result-area"><pre id="kbResult"></pre></div>
+</div>
+
+<!-- ===== 查 Bot 信息 ===== -->
+<div class="section">
+  <h3>查 Bot 信息 <span class="tag">action=getMe</span></h3>
+  <p class="hint">获取机器人自身的基本信息。</p>
+  <div class="row">
+    <button onclick="getMe()">调用发送</button>
+    <button class="secondary" onclick="toggleCode('meCode')">显示 / 隐藏 JS 源码</button>
+  </div>
+  <div id="meCode" class="code-area">
+    <div class="code-header">
+      <span>JavaScript 调用源码</span>
+      <button onclick="copyCode('meCode')">复制代码</button>
+    </div>
+    <pre><code class="language-javascript" id="meCodeInner"></code></pre>
+  </div>
+  <div class="result-area"><pre id="meResult"></pre></div>
+</div>
+
+<!-- ===== 获取更新 ===== -->
+<div class="section">
+  <h3>获取更新 / 拿 Chat ID <span class="tag">action=getUpdates</span></h3>
+  <p class="hint">获取机器人收到的所有最近消息，从中找到你的 chat.id。</p>
+  <div class="row">
+    <button onclick="getUpdates()">调用发送</button>
+    <button class="secondary" onclick="toggleCode('upCode')">显示 / 隐藏 JS 源码</button>
+  </div>
+  <div id="upCode" class="code-area">
+    <div class="code-header">
+      <span>JavaScript 调用源码</span>
+      <button onclick="copyCode('upCode')">复制代码</button>
+    </div>
+    <pre><code class="language-javascript" id="upCodeInner"></code></pre>
+  </div>
+  <div class="result-area"><pre id="upResult"></pre></div>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/ccouo-cn/JavaScript@main/00qy4skmyrwws.js"></script>
+
+
+
+</body></html>
