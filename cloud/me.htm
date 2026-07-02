@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ccouo-cn/css@main/uq72kl.css">
+</head>
+<body class="bg-gray-200 min-h-screen py-10 overflow-x-hidden">
+
+    <!-- ====== 头像卡片 ====== -->
+    <div class="relative w-[280px] h-[280px] flex items-center justify-center mx-auto mt-6 animate-scale-in delay-1">
+        <div class="profileCard_container relative p-8 border-2 border-dashed rounded-full border-gray-400/50 w-full h-full flex items-center justify-center box-border animate-fade-in-up delay-2">
+            
+            <!-- 顶部: Web -->
+            <button class="absolute left-1/2 -top-5 -translate-x-1/2 rounded-full bg-cover cursor-pointer border border-gray-400/50 p-[2px] active:scale-95 hover:scale-110 hover:-translate-y-1 transition-all duration-500 z-10 outline-none animate-pop-in" style="animation-delay: 0.5s;">
+                <span class="flex items-center justify-center w-[44px] h-[44px] rounded-full z-[2] bg-white text-[11px] font-bold text-blue-600 shadow-sm">Web</span>
+            </button>
+
+            <!-- 左下: Linux -->
+            <button class="absolute left-[-10px] bottom-6 rounded-full bg-cover cursor-pointer border border-gray-400/50 p-[2px] active:scale-95 hover:scale-110 hover:-translate-y-1 transition-all duration-500 z-10 outline-none animate-pop-in" style="animation-delay: 0.65s;">
+                <span class="flex items-center justify-center w-[44px] h-[44px] rounded-full z-[2] bg-white text-[11px] font-bold text-gray-800 shadow-sm">Linux</span>
+            </button>
+
+            <!-- 右下: Android -->
+            <button class="absolute right-[-10px] bottom-6 rounded-full bg-cover cursor-pointer border border-gray-400/50 p-[2px] active:scale-95 hover:scale-110 hover:-translate-y-1 transition-all duration-500 z-10 outline-none animate-pop-in" style="animation-delay: 0.8s;">
+                <span class="flex items-center justify-center w-[44px] h-[44px] rounded-full z-[2] bg-white text-[11px] font-bold text-green-600 shadow-sm">Android</span>
+            </button>
+
+            <!-- 中间头像 -->
+            <button class="profile_item w-[170px] h-[170px] p-1 border-2 border-gray-300 rounded-full hover:border-gray-500 cursor-pointer transition-all duration-700 z-0 overflow-hidden outline-none animate-scale-in" style="animation-delay: 0.3s;">
+                <img src="https://mmbiz.qpic.cn/mmbiz_jpg/VDCUoW3UiblKT2ZziaUP4WtluZQmYVeuQMTaf3kVXThfxu7bcLxHwDarmVhE7HW4MkNAXcva5VQy8jcAS9FQdsEyricYUibDoGhsVFvxBGLbVVM/640?watermark=1&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=1" alt="avatar" referrerpolicy="no-referrer" class="w-full h-full object-cover rounded-full active:scale-95 hover:scale-105 transition-all duration-700">
+            </button>
+        </div>
+    </div>
+
+    <!-- ====== 技能条 ====== -->
+    <div class="container animate-fade-in-up delay-3">
+        <div class="skill-box">
+            <span class="title"><i class="fab fa-php" style="color:#8892BF"></i> PHP</span>
+            <div class="skill-bar"><span class="skill-per php"><span class="tooltip">20%</span></span></div>
+        </div>
+        <div class="skill-box">
+            <span class="title"><i class="fab fa-js" style="color:#F7DF1E"></i> JavaScript</span>
+            <div class="skill-bar"><span class="skill-per javascript"><span class="tooltip">30%</span></span></div>
+        </div>
+        <div class="skill-box">
+            <span class="title"><i class="fab fa-java" style="color:#007396"></i> Java</span>
+            <div class="skill-bar"><span class="skill-per java"><span class="tooltip">75%</span></span></div>
+        </div>
+        <div class="skill-box">
+            <span class="title"><i class="fab fa-golang" style="color:#00ADD8"></i> Golang</span>
+            <div class="skill-bar"><span class="skill-per golang"><span class="tooltip">80%</span></span></div>
+        </div>
+    </div>
+
+    <!-- ====== 官网链接 ====== -->
+    <div class="flex justify-center mb-8 official-site" style="animation-delay: 0.85s;">
+        <a href="https://www.ccouo.cn" target="_blank" class="flex items-center gap-2 text-gray-600 text-sm font-medium hover:text-[#6c5ce7] transition-colors duration-300 bg-white px-5 py-2.5 rounded-full shadow-sm hover:shadow-md">
+            官网：www.ccouo.cn
+            <i class="fas fa-link text-[#6c5ce7]"></i>
+        </a>
+    </div>
+
+    <!-- ====== 底部社交图标 ====== -->
+    <div class="flex justify-center gap-8 mt-6 mb-12">
+        <!-- Telegram -->
+        <a href="https://www.ccouo.cn/tg" target="_blank" class="social-icon w-14 h-14 rounded-full bg-white flex items-center justify-center text-[#0088cc] text-2xl shadow-md hover:-translate-y-2 hover:shadow-lg hover:rotate-6 transition-all duration-300 outline-none" title="Telegram">
+            <i class="fab fa-telegram-plane"></i>
+        </a>
+
+        <!-- 微信 -->
+        <a href="https://mmbiz.qpic.cn/sz_mmbiz_jpg/VDCUoW3UiblKkvGP9fxlaZ8roUgzfs9xHhkbibfua4NzU42SAicky0vBvayydfnMeiapkCXP5JKrGQmM5onKcSV2wGbc0SicgAKF9SwjT2OHFwAk/640?wx_fmt=jpeg&amp;watermark=1&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=0" target="_blank" class="social-icon w-14 h-14 rounded-full bg-white flex items-center justify-center text-[#07c160] text-2xl shadow-md hover:-translate-y-2 hover:shadow-lg hover:-rotate-6 transition-all duration-300 outline-none" title="微信二维码">
+            <i class="fab fa-weixin"></i>
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com/ccouo-cn/" target="_blank" class="social-icon w-14 h-14 rounded-full bg-white flex items-center justify-center text-[#333] text-2xl shadow-md hover:-translate-y-2 hover:shadow-lg hover:rotate-6 transition-all duration-300 outline-none" title="GitHub">
+            <i class="fab fa-github"></i>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/profile.php?id=61590591997290" target="_blank" class="social-icon w-14 h-14 rounded-full bg-white flex items-center justify-center text-[#1877f2] text-2xl shadow-md hover:-translate-y-2 hover:shadow-lg hover:-rotate-6 transition-all duration-300 outline-none" title="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+    </div>
+
+
+
+</body></html>
