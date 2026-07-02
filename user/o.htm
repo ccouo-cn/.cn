@@ -1,89 +1,29 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8" />
-<title>社交链接</title>
-
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/ccouo-cn/css@main/k.css" />
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Links - Glass Effect</title>
+<!-- Font Awesome All CSS (其他图标继续使用) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="ovkw93hl.css">
 </head>
 <body>
 
-<!-- 社交圆环 -->
-<div class="social-circle">
+<!-- 动态生成的社交链接容器 -->
+<div id="rows-wrapper"></div>
 
-  <a href="/tg.html" target="_blank" class="social-item item-tg">
-    <i class="fab fa-telegram-plane"></i>
-    <span>Telegram</span>
-  </a>
-
-  <a href="https://github.com/ccouo-cn/galdroid" target="_blank" class="social-item item-github">
-    <i class="fab fa-github"></i>
-    <span>GitHub</span>
-  </a>
-
-  <a href="https://www.facebook.com/profile.php?id=61590591997290" target="_blank" rel="noopener noreferrer" class="social-item item-fb">
-    <i class="fab fa-facebook"></i>
-    <span>Facebook</span>
-  </a>
-
-  <a href="https://www.instagram.com/q2020770" target="_blank" rel="noopener noreferrer" class="social-item item-ig">
-    <i class="fab fa-instagram"></i>
-    <span>Instagram</span>
-  </a>
-
-  <a href="https://x.com/sqks9123" target="_blank" class="social-item item-x">
-    <i class="fa-brands fa-x-twitter"></i>
-    <span>X (Twitter)</span>
-  </a>
-
-  <a href="javascript:void(0)" onclick="showWechatPopup()" class="social-item item-wechat">
-    <i class="fab fa-weixin"></i>
-    <span>微信</span>
-  </a>
-
-  <a href="https://qm.qq.com/q/qQR0yeGQYo" target="_blank" class="social-item item-qq">
-    <i class="fab fa-qq"></i>
-    <span>QQ</span>
-  </a>
-
-  <a href="https://www.linkedin.com/in/%E6%8B%89-%E6%97%AE-02348341a" target="_blank" rel="noopener noreferrer" class="social-item item-linkedin">
-    <i class="fab fa-linkedin"></i>
-    <span>LinkedIn</span>
-  </a>
-
-  <a href="mailto:ccouo666@outlook.com" class="social-item item-mail">
-    <i class="fas fa-envelope"></i>
-    <span>邮箱</span>
-  </a>
-
-  <a href="/user/feedback.htm" target="_blank" class="social-item item-feedback">
-    <i class="fas fa-comment-dots"></i>
-    <span>在线反馈</span>
-  </a>
-
+<!-- 微信弹窗（只显示图片） -->
+<div id="wechatMask" class="popup-mask" onclick="toggleWechat(false)">
+  <div class="popup-content" onclick="event.stopPropagation()">
+    <div class="qrcode-box">
+      <img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/VDCUoW3UiblKkvGP9fxlaZ8roUgzfs9xHhkbibfua4NzU42SAicky0vBvayydfnMeiapkCXP5JKrGQmM5onKcSV2wGbc0SicgAKF9SwjT2OHFwAk/640?wx_fmt=jpeg&amp;watermark=1&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1#imgIndex=0" alt="微信二维码" referrerpolicy="no-referrer">
+    </div>
+    <button onclick="toggleWechat(false)">关闭</button>
+  </div>
 </div>
 
-<!-- 微信弹窗 -->
-<div class="overlay" id="wechatOverlay" onclick="closeWechatPopup()"></div>
-<div class="popup" id="wechatPopup">
-  微信号：<b>error 404</b>
-  <br />
-  <button onclick="closeWechatPopup()">关闭</button>
-</div>
+<script src="mowk4x1x080whe4rlvqwjj4.js"></script>
 
-<script>
-  function showWechatPopup() {
-    document.getElementById('wechatPopup').style.display = 'block';
-    document.getElementById('wechatOverlay').style.display = 'block';
-  }
 
-  function closeWechatPopup() {
-    document.getElementById('wechatPopup').style.display = 'none';
-    document.getElementById('wechatOverlay').style.display = 'none';
-  }
-</script>
 
-</body>
-</html>
+</body></html>
