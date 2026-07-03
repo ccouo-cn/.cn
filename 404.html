@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 · 才不是迷路了呢！</title>
+
+<!-- استيراد Tailwind CSS ومكتبة الأيقونات والخطوط -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>@import url("https://use.typekit.net/zmc8vly.css");</style>
+<link rel="icon" href="favicon.ico">
+
+<style>
+/* إعدادات الخط والخلفية الأساسية */
+body {
+    font-family: 'degular-display', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #fafafa;
+    color: #1a1a1a;
+    overflow-x: hidden;
+}
+
+/* ========== تأثير الظهور التدريجي للعناصر ========== */
+.stagger-item { opacity: 0; transform: translateY(50px) scale(0.9); }
+.visible .stagger-item {
+    animation: staggerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(var(--i) * 0.12s);
+}
+@keyframes staggerPop {
+    from { opacity: 0; transform: translateY(50px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ========== زر العودة بلمسة "متغطرسة" ========== */
+.home-btn {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+.home-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(255,46,147,0.35);
+}
+.home-btn:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* ========== تأثير الاهتزاز الغاضب ========== */
+.shake {
+    animation: shake 0.5s ease-in-out infinite alternate;
+}
+@keyframes shake {
+    from { transform: rotate(-1deg); }
+    to { transform: rotate(1deg); }
+}
+</style>
+</head>
+<body class="antialiased min-h-screen flex items-center justify-center relative">
+
+<!-- خلفية زخرفية بنمط مسحوب -->
+<div class="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+</div>
+
+<main class="max-w-2xl mx-auto px-6 text-center visible mt-20">
+    <!-- الرقم 404 الضخم -->
+    <div class="text-[12rem] md:text-[18rem] font-bold text-pink-100 leading-none select-none stagger-item mb-[-4rem] md:mb-[-6rem] shake inline-block" style="--i:0">404</div>
+    
+    <div class="relative">
+        <!-- العنوان الرئيسي بأسلوب متغطرس ولطيف -->
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 text-gray-900 stagger-item" style="--i:1">
+            呀 好讨厌˶>ᗜ<˶<br><span class="text-pink-500 text-2xl md:text-4xl">你怎么可以乱找嘛</span>
+        </h1>
+        
+        <!-- إدراج صورة تعبيرية (ملصق/表情包) بزوايا دائرية وتأثير دوران -->
+        <div class="stagger-item mb-6" style="--i:2">
+            <img src="https://mmbiz.qpic.cn/mmbiz_jpg/VDCUoW3UiblKUscRbSFoVV57IB2YmaSEAianvBJsia6pmlvUgOibg1Ha4EONYuCW8kvWial6NL2S0zW1pVXj5eLr4lXbkoeFShiaCFNLibUU4oOr9I/640?wx_fmt=jpeg&watermark=1&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=12" 
+                 alt="傲娇表情包" 
+                 referrerpolicy="no-referrer" 
+                 class="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-3xl shadow-xl border-4 border-pink-300 rotate-3 hover:rotate-0 hover:scale-110 transition-all duration-500 object-cover bg-white">
+        </div>
+        
+        <!-- نص فرعي بأسلوب "تسونديري" (Tsundere) -->
+        <p class="text-lg text-gray-600 mb-8 leading-relaxed stagger-item" style="--i:3">
+            呜呜呜肯定是那个<span class="line-through text-gray-400">笨蛋</span>作者搞丢了…<br>
+            <span class="text-pink-500 font-semibold">不过！谁让你手贱乱点的啦！哼！₍ᐢ๑ ̯๑ᐢ₎</span>
+        </p>
+        
+        <!-- عرض المسار الخاطئ -->
+        <div class="bg-white/90 backdrop-blur-md border-2 border-pink-200 rounded-2xl p-5 mb-12 inline-block max-w-full shadow-lg stagger-item" style="--i:4">
+            <p class="text-xs text-pink-400 mb-2 uppercase tracking-widest font-bold"> 你瞎摸到的路径 </p>
+            <p id="error-path" class="text-gray-700 font-mono text-sm md:text-base break-all"></p>
+        </div>
+        
+        <br>
+        
+        <!-- زر العودة بأسلوب آمر ولطيف -->
+        <a href="/" class="home-btn inline-flex items-center gap-3 px-10 py-4 rounded-full border-2 border-pink-500 bg-pink-500 text-white text-sm font-bold tracking-widest uppercase hover:bg-white hover:text-pink-500 stagger-item" style="--i:5">
+            <i class="fas fa-broom"></i>
+            还不快给我滚回首页！
+        </a>
+        
+    </div>
+</main>
+
+<script>
+// دالة لاستخراج المعاملات من الرابط وعرض المسار الخاطئ
+(function() {
+    // إنشاء كائن لقراءة معلمات الرابط
+    var params = new URLSearchParams(window.location.search);
+    
+    // استخراج قيمة المعامل 'B'
+    var bParam = params.get('B');
+    
+    // تحديد العنصر المخصص لعرض النص
+    var pathElement = document.getElementById('error-path');
+    
+    // التحقق من وجود المعامل B وعرضه
+    if (bParam) {
+        pathElement.textContent = decodeURIComponent(bParam);
+    } else {
+        pathElement.textContent = '什么都没有哦～真是白痴呢';
+    }
+})();
+</script>
+
+</body>
+</html>
