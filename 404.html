@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 · 页面不存在</title>
+<title>404 · 才不是迷路了呢！</title>
 
 <!-- استيراد Tailwind CSS ومكتبة الأيقونات والخطوط -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -86,7 +86,7 @@ body {
             <span class="text-pink-500 font-semibold">不过！谁让你手贱乱点的啦！哼！₍ᐢ๑ ̯๑ᐢ₎</span>
         </p>
         
-        <!-- عرض المسار الخاطئ -->
+        <!-- عرض المسار الحالي للصفحة مباشرة -->
         <div class="bg-white/90 backdrop-blur-md border-2 border-pink-200 rounded-2xl p-5 mb-12 inline-block max-w-full shadow-lg stagger-item" style="--i:4">
             <p class="text-xs text-pink-400 mb-2 uppercase tracking-widest font-bold"> 你瞎摸到的路径 </p>
             <p id="error-path" class="text-gray-700 font-mono text-sm md:text-base break-all"></p>
@@ -104,20 +104,17 @@ body {
 </main>
 
 <script>
-// دالة لاستخراج المعاملات من الرابط وعرض المسار الخاطئ
+// دالة لعرض مسار الصفحة الحالية مباشرة (بدون الحاجة لمعامل B)
 (function() {
-    // إنشاء كائن لقراءة معلمات الرابط
-    var params = new URLSearchParams(window.location.search);
-    
-    // استخراج قيمة المعامل 'B'
-    var bParam = params.get('B');
+    // الحصول على مسار الصفحة الحالية مباشرة من المتصفح
+    var currentPath = window.location.pathname + window.location.search;
     
     // تحديد العنصر المخصص لعرض النص
     var pathElement = document.getElementById('error-path');
     
-    // التحقق من وجود المعامل B وعرضه
-    if (bParam) {
-        pathElement.textContent = decodeURIComponent(bParam);
+    // التحقق من المسار وعرضه
+    if (currentPath && currentPath !== '/404.html' && currentPath !== '/') {
+        pathElement.textContent = currentPath;
     } else {
         pathElement.textContent = '什么都没有哦～真是白痴呢';
     }
