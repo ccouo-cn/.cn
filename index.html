@@ -1,117 +1,205 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Galdroid · KRKR 模拟器</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galdroid · KRKR 模拟器</title>
 
-    <meta name="description" content="Galdroid 是基于 KRKR（吉里吉里）模拟器深度优化的安卓运行环境，内置海量视觉小说与同人游戏，一键下载，畅玩无忧。">
-    <meta name="keywords" content="Galdroid, KRKR, 吉里吉里模拟器, 视觉小说, 同人游戏, 游戏下载, Android">
-    <meta name="author" content="Galdroid Team">
-<!-- Font Awesome -->
-<link
-  rel="stylesheet"
-  href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>@import url("https://use.typekit.net/zmc8vly.css");</style>
+<link rel="icon" href="favicon.ico">
 
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="/index/47c52c93.css">
-    <link rel="stylesheet" href="/index/9fc08b13.css">
+<style>
+body {
+    font-family: 'degular-display', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #fafafa;
+    color: #1a1a1a;
+    overflow-x: hidden;
+}
 
-    <script>
-        !function(){
-            document.documentElement.className="js";
-            var e,t;
-            (t=document.createElement("style")).innerHTML="root: { --tmp-var: bold; }",
-            document.head.appendChild(t),
-            e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),
-            t.parentNode.removeChild(t),
-            e||alert("请在支持CSS变量的现代浏览器中查看本页面。");
-        }();
-    </script>
+/* ========== 文字逐个弹入 ========== */
+.stagger-item { opacity: 0; transform: translateY(50px) scale(0.9); }
+.section.visible .stagger-item,
+nav.visible .stagger-item,
+footer.visible .stagger-item {
+    animation: staggerPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(var(--i) * 0.12s);
+}
+@keyframes staggerPop {
+    from { opacity: 0; transform: translateY(50px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ========== 图标强制单行 ========== */
+#rows-wrapper {
+    display: flex; flex-direction: column; align-items: center; padding: 1rem 0; width: 100%;
+}
+.container {
+    display: flex; flex-wrap: nowrap; justify-content: center; align-items: center;
+    gap: clamp(0.2rem, 1vw, 1.2rem); width: 100%; max-width: 800px;
+}
+
+/* ========== 图标逐个弹入（靠 #icons-container.visible 触发） ========== */
+.glass {
+    --r: 0deg; --j: 0;
+    width: clamp(30px, 7vw, 56px); height: clamp(30px, 7vw, 56px);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: clamp(0.7rem, 1.6vw, 1.3rem);
+    color: #999; background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,0,0,0.06); text-decoration: none;
+    transform: rotate(var(--r)) scale(0.3); opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative; flex-shrink: 0;
+}
+#icons-container.visible .glass {
+    animation: iconPop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(var(--j) * 0.07s);
+}
+@keyframes iconPop {
+    from { opacity: 0; transform: rotate(var(--r)) scale(0.3); }
+    to { opacity: 1; transform: rotate(var(--r)) scale(1); }
+}
+#icons-container.visible .glass:hover {
+    transform: rotate(0deg) scale(1.2) !important; color: #fff !important;
+    background: #ff2e93 !important; border-color: #ff2e93 !important;
+    box-shadow: 0 10px 30px rgba(255,46,147,0.35); z-index: 10;
+}
+.glass svg { width: clamp(14px, 2vw, 22px); height: clamp(14px, 2vw, 22px); fill: currentColor; }
+.glass::after {
+    content: attr(data-text); position: absolute; bottom: -26px; left: 50%;
+    transform: translateX(-50%) scale(0.8); font-size: 10px; color: #666; background: #fff;
+    padding: 2px 8px; border-radius: 4px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.glass:hover::after { opacity: 1; transform: translateX(-50%) scale(1); bottom: -30px; }
+</style>
 </head>
+<body class="antialiased">
 
-<body class="loading">
-<main>
-
-    <!-- 顶部信息栏 -->
-    <div class="frame">
-        <div class="frame__title-wrap">
-            <h1 class="frame__title">Galdroid · KRKR 模拟器 × 游戏大全</h1>
+<nav class="fixed w-full top-0 z-50 bg-white/70 backdrop-blur-lg border-b border-gray-100 nav-block">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <h1 class="text-lg font-semibold tracking-wide stagger-item" style="--i:0">Galdroid · KRKR 模拟器 × 游戏大全</h1>
+        <div class="space-x-8">
+            <a href="https://ccouo.cn/docs" class="text-sm text-gray-500 hover:text-pink-500 transition-colors stagger-item" style="--i:1">使用文档</a>
+            <a href="https://github.com/ccouo-cn/galdroid" class="text-sm text-gray-500 hover:text-pink-500 transition-colors stagger-item" style="--i:2">GitHub</a>
         </div>
-        <nav class="frame__links">
-            <a href="https://ccouo.cn/docs">使用文档</a>
-            
-            <a href="https://github.com/ccouo-cn/galdroid">GitHub</a>
-        </nav>
     </div>
+</nav>
 
-    <!-- 主内容区 -->
-    <div class="content">
-        <div class="scroll__stage">
-            <div class="scroll__content">
-
-                <!-- Section 01 -->
-                <section class="section">
-                    <div class="section__title">
-                        <h1 class="section__title-number">01</h1>
-                        <h2 class="section__title-text">KRKR 深度适配</h2>
-                        <p class="section__title-arrow">
-                            <span>➤</span><br>
-                            <span>➤</span>
-                        </p>
-                    </div>
-                    <p class="section__paragraph">
-                        基于吉里吉里（KRKR）引擎深度优化，完美兼容各类视觉小说与同人作品。<br>
-                        低功耗、高帧率、无闪退。<br>
-                        <a href="https://ccouo.cn/download" class="section__button">下载 Galdroid</a>
-                    </p>
-                </section>
-
-                <!-- Section 02 -->
-                <section class="section">
-                    <div class="section__title">
-                        <h1 class="section__title-number">02</h1>
-                        <h2 class="section__title-text">内置游戏大全</h2>
-                    </div>
-                    <p class="section__paragraph">
-                        不再到处找资源。<br>
-                        从经典名作到小众同人，Galdroid 已为你打包好数千款游戏。<br>
-                        <a href="https://ccouo.cn/games" class="section__button">浏览游戏库</a>
-                    </p>
-                </section>
-
-                <!-- Section 03 -->
-                <section class="section">
-                    <div class="section__title">
-                        <h1 class="section__title-number">03</h1>
-                        <h2 class="section__title-text">即刻启程</h2>
-                    </div>
-                    <p class="section__paragraph">
-                        安装即用，无需复杂配置。<br>
-                        打开 Galdroid，进入属于你的二次元世界。<br>
-                        
-                    </p>
-                </section>
-
+<main class="pt-40 pb-20 max-w-7xl mx-auto px-6">
+    <section class="min-h-[80vh] flex items-center section">
+        <div class="grid md:grid-cols-2 gap-16 items-center w-full">
+            <div class="relative">
+                <div class="text-[14rem] font-bold text-pink-50 leading-none absolute -top-20 -left-8 -z-10 select-none stagger-item" style="--i:0">01</div>
+                <h2 class="text-5xl md:text-6xl font-bold mb-8 text-gray-900 stagger-item" style="--i:1">KRKR 深度适配</h2>
+                <p class="text-xl text-gray-500 mb-10 leading-loose stagger-item" style="--i:2">基于吉里吉里（KRKR）引擎深度优化，完美兼容各类视觉小说与同人作品。<br>低功耗、高帧率、无闪退。</p>
+                <a href="https://ccouo.cn/download" class="inline-block px-10 py-4 rounded-full border-2 border-pink-500 text-pink-500 text-sm font-semibold tracking-widest uppercase hover:bg-pink-500 hover:text-white transition-all duration-500 stagger-item" style="--i:3">下载 Galdroid</a>
+            </div>
+            <div class="hidden md:flex justify-end">
+                <div class="text-pink-200 text-8xl font-light leading-tight select-none stagger-item" style="--i:2">➤<br>➤</div>
             </div>
         </div>
+    </section>
 
-        <div class="layout__line"></div>
-
-        <!-- Footer -->
-        <div class="layout__faboolea">
-            <a class="layout__faboolea-link" href="./user/o.htm">
-                联系？
-            </a>
-            
-
-
+    <section class="min-h-[80vh] flex items-center section">
+        <div class="grid md:grid-cols-2 gap-16 items-center w-full">
+            <div class="hidden md:flex">
+                <div class="text-pink-200 text-8xl font-light leading-tight select-none stagger-item" style="--i:0">➤<br>➤</div>
+            </div>
+            <div class="relative">
+                <div class="text-[14rem] font-bold text-pink-50 leading-none absolute -top-20 -right-8 -z-10 select-none text-right w-full stagger-item" style="--i:0">02</div>
+                <h2 class="text-5xl md:text-6xl font-bold mb-8 text-gray-900 stagger-item" style="--i:1">内置游戏大全</h2>
+                <p class="text-xl text-gray-500 mb-10 leading-loose stagger-item" style="--i:2">不再到处找资源。<br>从经典名作到小众同人，Galdroid 已为你打包好数千款游戏。</p>
+                <a href="https://ccouo.cn/games" class="inline-block px-10 py-4 rounded-full border-2 border-pink-500 text-pink-500 text-sm font-semibold tracking-widest uppercase hover:bg-pink-500 hover:text-white transition-all duration-500 stagger-item" style="--i:3">浏览游戏库</a>
+            </div>
         </div>
-    </div>
+    </section>
 
+    <section class="min-h-[70vh] flex items-center justify-center text-center section">
+        <div class="relative">
+            <div class="text-[16rem] font-bold text-pink-50 leading-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 select-none whitespace-nowrap stagger-item" style="--i:0">03</div>
+            <h2 class="text-5xl md:text-6xl font-bold mb-8 text-gray-900 stagger-item" style="--i:1">即刻启程</h2>
+            <p class="text-xl text-gray-500 mb-10 leading-loose stagger-item" style="--i:2">安装即用，无需复杂配置。<br>打开 Galdroid，进入属于你的二次元世界。</p>
+        </div>
+    </section>
 </main>
 
-<script src="//gcore.jsdelivr.net/gh/ccouo-cn/.cn@main/index/33763982.js"></script>
+<footer class="bg-white border-t border-gray-100 py-16 footer-block">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+        <div class="flex items-center gap-4 mb-6 stagger-item" style="--i:0">
+            <span class="bg-pink-50 text-pink-500 px-5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">合作</span>
+            <a href="mailto:Q2020770@outlook.com" class="text-gray-400 hover:text-pink-500 transition-colors text-sm">Email Q2020770@outlook.com</a>
+        </div>
+        <div id="rows-wrapper" class="stagger-item" style="--i:1">
+            <div class="container" id="icons-container"></div>
+        </div>
+    </div>
+</footer>
+
+<script>
+const linksData = [
+    {href: "https://ccouo.cn/download", target: "_blank", icon: "fas fa-download", text: "APP下载"},
+    {href: "/tg.html", target: "_blank", icon: "fab fa-telegram", text: "Telegram"},
+    {href: "https://github.com/ccouo-cn/galdroid", target: "_blank", icon: "fab fa-github", text: "GitHub"},
+    {href: "https://www.facebook.com/profile.php?id=61590591997290", target: "_blank", rel: "noopener noreferrer", icon: "fab fa-facebook-f", text: "Facebook"},
+    {href: "https://www.instagram.com/q2020770", target: "_blank", rel: "noopener noreferrer", icon: "fab fa-instagram", text: "Instagram"},
+    {href: "https://x.com/sqks9123", target: "_blank", isSvg: true, svg: '<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>', text: "X"},
+    {href: "https://www.ccouo.cn/cloud/me.htm", icon: "fab fa-weixin", text: "微信"},
+    {href: "https://qm.qq.com/q/qQR0yeGQYo", target: "_blank", icon: "fab fa-qq", text: "QQ"},
+    {href: "https://www.linkedin.com/in/%E6%8B%89-%E6%97%AD-02348341a", target: "_blank", rel: "noopener noreferrer", icon: "fab fa-linkedin-in", text: "LinkedIn"},
+    {href: "mailto:ccouo666@outlook.com", icon: "fas fa-envelope", text: "邮箱"},
+    {href: "/user/feedback.htm", target: "_blank", icon: "fas fa-comment-dots", text: "在线反馈"}
+];
+
+function renderIcons() {
+    const container = document.getElementById('icons-container');
+    container.innerHTML = '';
+    const total = linksData.length;
+    linksData.forEach((item, index) => {
+        const a = document.createElement('a');
+        a.className = 'glass';
+        a.href = item.href;
+        if (item.target) a.target = item.target;
+        if (item.rel) a.rel = item.rel;
+        a.setAttribute('data-text', item.text);
+        const maxAngle = 28;
+        const r = total > 1 ? -maxAngle + (index / (total - 1)) * (maxAngle * 2) : 0;
+        a.style.setProperty('--r', r + 'deg');
+        a.style.setProperty('--j', index);
+        if (item.isSvg) {
+            a.innerHTML = item.svg;
+        } else {
+            const icon = document.createElement('i');
+            icon.className = item.icon;
+            a.appendChild(icon);
+        }
+        container.appendChild(a);
+    });
+}
+renderIcons();
+
+/* 关键修复：给 icons-container 也加上 visible */
+const blocks = document.querySelectorAll('.section, footer, nav');
+blocks.forEach(block => {
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                if (entry.target.tagName === 'FOOTER') {
+                    document.getElementById('icons-container').classList.add('visible');
+                }
+            } else {
+                entry.target.classList.remove('visible');
+                if (entry.target.tagName === 'FOOTER') {
+                    document.getElementById('icons-container').classList.remove('visible');
+                }
+            }
+        });
+    }, { threshold: 0.1 });
+    obs.observe(block);
+});
+</script>
+
 </body>
 </html>
