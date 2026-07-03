@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 页面不存在</title>
+<title>404 · 页面不存在</title>
 
 <!-- استيراد Tailwind CSS ومكتبة الأيقونات والخطوط -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -43,68 +43,57 @@ body {
 .home-btn:active {
     transform: translateY(1px) scale(0.98);
 }
-
-/* ========== تأثير الاهتزاز الغاضب ========== */
-.shake {
-    animation: shake 0.5s ease-in-out infinite alternate;
-}
-@keyframes shake {
-    from { transform: rotate(-1deg); }
-    to { transform: rotate(1deg); }
-}
 </style>
 </head>
-<body class="antialiased min-h-screen flex items-center justify-center relative">
+<body class="antialiased min-h-screen flex items-center justify-center relative overflow-hidden">
 
-<!-- خلفية زخرفية بنمط مسحوب -->
-<div class="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
-    <div class="absolute -top-40 -left-40 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+<!-- خلفية رقم 404 الضخمة كعنصر خلفي (الرقم 404 كخلفية ضخمة جداً) -->
+<div class="fixed inset-0 flex items-center justify-center pointer-events-none -z-20 select-none">
+    <span class="text-[25rem] md:text-[45rem] font-black text-pink-100 leading-none tracking-tighter">404</span>
 </div>
 
-<main class="max-w-2xl mx-auto px-6 text-center visible mt-20">
-    <!-- الرقم 404 الضخم -->
-    <div class="text-[12rem] md:text-[18rem] font-bold text-pink-100 leading-none select-none stagger-item mb-[-4rem] md:mb-[-6rem] shake inline-block" style="--i:0">404</div>
+<!-- خلفية زخرفية خفيفة بنمط مسحوب (بلور) -->
+<div class="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+</div>
+
+<main class="max-w-2xl mx-auto px-6 text-center visible">
+
+    <!-- العنوان الرئيسي بأسلوب متغطرس ولطيف -->
+    <h1 class="text-4xl md:text-6xl font-bold mb-10 text-gray-900 stagger-item" style="--i:0">
+        呀 好讨厌˶>ᗜ<˶<br><span class="text-pink-500 text-3xl md:text-5xl">你怎么可以乱找嘛</span>
+    </h1>
     
-    <div class="relative">
-        <!-- العنوان الرئيسي بأسلوب متغطرس ولطيف -->
-        <h1 class="text-3xl md:text-5xl font-bold mb-4 text-gray-900 stagger-item" style="--i:1">
-            呀 好讨厌˶>ᗜ<˶<br><span class="text-pink-500 text-2xl md:text-4xl">你怎么可以乱找嘛</span>
-        </h1>
-        
-        <!-- إدراج صورة تعبيرية (ملصق/表情包) بزوايا دائرية وتأثير دوران -->
-        <div class="stagger-item mb-6" style="--i:2">
-            <img src="https://mmbiz.qpic.cn/mmbiz_jpg/VDCUoW3UiblKUscRbSFoVV57IB2YmaSEAianvBJsia6pmlvUgOibg1Ha4EONYuCW8kvWial6NL2S0zW1pVXj5eLr4lXbkoeFShiaCFNLibUU4oOr9I/640?wx_fmt=jpeg&watermark=1&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=12" 
-                 alt="傲娇表情包" 
-                 referrerpolicy="no-referrer" 
-                 class="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-3xl shadow-xl border-4 border-pink-300 rotate-3 hover:rotate-0 hover:scale-110 transition-all duration-500 object-cover bg-white">
-        </div>
-        
-        <!-- نص فرعي بأسلوب "تسونديري" (Tsundere) -->
-        <p class="text-lg text-gray-600 mb-8 leading-relaxed stagger-item" style="--i:3">
-            呜呜呜肯定是那个<span class="line-through text-gray-400">笨蛋</span>作者搞丢了…<br>
-            <span class="text-pink-500 font-semibold">不过！谁让你手贱乱点的啦！哼！₍ᐢ๑ ̯๑ᐢ₎</span>
-        </p>
-        
-        <!-- عرض المسار الحالي للصفحة مباشرة -->
-        <div class="bg-white/90 backdrop-blur-md border-2 border-pink-200 rounded-2xl p-5 mb-12 inline-block max-w-full shadow-lg stagger-item" style="--i:4">
-            <p class="text-xs text-pink-400 mb-2 uppercase tracking-widest font-bold"> 你瞎摸到的路径 </p>
-            <p id="error-path" class="text-gray-700 font-mono text-sm md:text-base break-all"></p>
-        </div>
-        
-        <br>
-        
-        <!-- زر العودة بأسلوب آمر ولطيف -->
-        <a href="/" class="home-btn inline-flex items-center gap-3 px-10 py-4 rounded-full border-2 border-pink-500 bg-pink-500 text-white text-sm font-bold tracking-widest uppercase hover:bg-white hover:text-pink-500 stagger-item" style="--i:5">
-            <i class="fas fa-broom"></i>
-            还不快给我滚回首页！
-        </a>
-        
+    <!-- إدراج صورة تعبيرية (ملصق/表情包) -->
+    <div class="stagger-item mb-10" style="--i:1">
+        <img src="https://mmbiz.qpic.cn/mmbiz_jpg/VDCUoW3UiblKUscRbSFoVV57IB2YmaSEAianvBJsia6pmlvUgOibg1Ha4EONYuCW8kvWial6NL2S0zW1pVXj5eLr4lXbkoeFShiaCFNLibUU4oOr9I/640?wx_fmt=jpeg&watermark=1&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=12" 
+             alt="" 
+             referrerpolicy="no-referrer" 
+             class="w-56 h-56 md:w-72 md:h-72 mx-auto rounded-3xl shadow-2xl border-4 border-white rotate-3 hover:rotate-0 hover:scale-110 transition-all duration-500 object-cover bg-white">
     </div>
+    
+    <!-- نص فرعي بأسلوب "تسونديري" (Tsundere) -->
+    <p class="text-xl text-gray-600 mb-6 leading-relaxed stagger-item" style="--i:2">
+        呜呜呜肯定是那个<span class="line-through text-gray-400">笨蛋</span>作者搞丢了…<br>
+        <span class="text-pink-500 font-semibold text-2xl block mt-2">不过！谁让你手贱乱点的啦！哼！₍ᐢ๑ ̯๑ᐢ₎</span>
+    </p>
+    
+    <!-- عرض المسار بدون بطاقة (بسيط وأنيق) -->
+    <p class="text-gray-400 font-mono text-sm mb-14 stagger-item" style="--i:3">
+        你瞎摸到的路径：<span id="error-path" class="text-pink-400"></span>
+    </p>
+    
+    <!-- زر العودة بأسلوب آمر ولطيف -->
+    <a href="/" class="home-btn inline-flex items-center gap-3 px-12 py-5 rounded-full border-2 border-pink-500 bg-pink-500 text-white text-base font-bold tracking-widest uppercase hover:bg-white hover:text-pink-500 stagger-item" style="--i:4">
+        <i class="fas fa-broom"></i>
+        滚回首页！
+    </a>
+    
 </main>
 
 <script>
-// دالة لعرض مسار الصفحة الحالية مباشرة (بدون الحاجة لمعامل B)
+// دالة لعرض مسار الصفحة الحالية مباشرة
 (function() {
     // الحصول على مسار الصفحة الحالية مباشرة من المتصفح
     var currentPath = window.location.pathname + window.location.search;
