@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>游戏上传</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .top-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .notice {
+            font-size: 14px;
+            color: #d9534f;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .main-text {
+            font-size: 22px;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .sub-text {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* 按钮样式 */
+  .upload-btn {
+    margin-top: 25px;
+    padding: 12px 30px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #7f9cf5;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.2s, box-shadow 0.2s;
+
+    /* ✅ 禁止系统点击效果 */
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    user-select: none;
+}
+
+/* 防止 focus / active 状态 */
+.upload-btn:focus,
+.upload-btn:active {
+    outline: none;
+    box-shadow: none;
+}
+
+
+        
+        
+
+        /* ✅ 系统级点击样式：顶部蓝色高光 */
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部图片 -->
+        <img 
+            class="top-image"
+            src="https://json.yuzusoft.pw/Screenshot_2026-06-22-04-13-31-367_com.tencent.mobileqq-edit.jpg"
+            alt="提示图片"
+        >
+
+        <!-- 上传提示 -->
+        <div class="notice">
+            禁止上传其他无关紧要的内容<br>
+            上传成功会立马审核，根据用户下载量可到开发者https://yuzusoft.pw/developerToolbox.htm(待开发)查看收入<br>
+            上传大小无限制
+        </div>
+
+        <!-- 主文字 -->
+        <div class="main-text">
+            你的支持就是我们的最大动力喵～<br>
+            感谢您上传的游戏喵～
+        </div>
+        <div class="sub-text">
+            🐾 一起变得更好喵 🐾
+        </div>
+
+        <!-- 按钮 -->
+        <button class="upload-btn" onclick="location.href='ccouo://user?msg=up'">
+  立即上传
+</button>
+        <div class="sub-text">
+           下滑通知栏查看上传通知
+        </div>
+    </div>
+</body>
+</html>
