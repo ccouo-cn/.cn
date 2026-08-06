@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Float 加解密工具</title>
+<style>
+    * { border-radius: 0 !important; }
+    body {
+        background: #1a1a1a;
+        color: #e8cfcf;
+        font-family: Consolas, "Microsoft YaHei", monospace;
+        margin: 0;
+        padding: 20px;
+    }
+    .wrap { max-width: 960px; margin: auto; }
+    h2 {
+        color: #d99a9a;
+        border-bottom: 1px solid #552e2e;
+        padding-bottom: 6px;
+        margin-bottom: 16px;
+    }
+    textarea, input, select, button {
+        width: 100%;
+        background: #2a1f1f;
+        color: #f0d6d6;
+        border: 1px solid #663333;
+        padding: 8px;
+        margin: 4px 0 12px;
+        box-sizing: border-box;
+        font-family: Consolas, monospace;
+        font-size: 14px;
+    }
+    button {
+        cursor: pointer;
+        background: #552e2e;
+        color: #f0d6d6;
+        border: 1px solid #774444;
+        padding: 10px;
+        font-size: 14px;
+    }
+    button:hover { background: #703c3c; }
+    button:active { background: #8a4a4a; }
+    label {
+        font-size: 12px;
+        color: #c28a8a;
+        display: block;
+        margin-top: 4px;
+    }
+    .row { display: flex; gap: 8px; }
+    .row > * { flex: 1; }
+    .status {
+        font-size: 12px;
+        padding: 6px 8px;
+        margin: 4px 0 12px;
+        border: 1px solid #552e2e;
+        background: #221818;
+        color: #c28a8a;
+        min-height: 16px;
+    }
+    .status.ok { color: #88dd88; border-color: #335533; }
+    .status.err { color: #dd8888; border-color: #553333; }
+    hr { border: none; border-top: 1px solid #552e2e; margin: 18px 0; }
+    .section-title {
+        color: #d99a9a;
+        font-size: 14px;
+        margin: 8px 0 4px;
+        border-left: 3px solid #774444;
+        padding-left: 8px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h2>Float 加解密工具</h2>
+
+<label>后端地址（不可修改）</label>
+<input id="api" value="https://api.yuzusoft.pw/float.go" disabled />
+
+<label>模式</label>
+<select id="mode">
+    <option value="encrypt">加密（UTF-8 → Float）</option>
+    <option value="decrypt">解密（Float → UTF-8）</option>
+</select>
+
+<label>Key（36进制，0-9 + a-z，最多10位，留空=不加密）</label>
+<div class="row">
+    <input id="key" placeholder="例如：shkknc2590" maxlength="10" />
+    <button style="flex:0 0 140px" onclick="genKey()">随机生成</button>
+</div>
+
+<hr>
+
+<div class="section-title">方式一：手动输入字符串（GET）</div>
+<textarea id="textInput" rows="4" placeholder="输入要加密的文字，或要解密的 float 数组"></textarea>
+<button onclick="sendGet()">发送 GET 请求</button>
+
+<hr>
+
+<div class="section-title">方式二：选择文件（POST，文件内容走 body）</div>
+<input type="file" id="fileInput" />
+<button onclick="sendPost()">发送 POST 请求</button>
+
+<hr>
+
+<label>状态</label>
+<div class="status" id="status">等待操作...</div>
+
+<label>返回结果</label>
+<textarea id="output" rows="8" readonly placeholder="结果将显示在这里"></textarea>
+<div class="row">
+    <button onclick="copyResult()">复制结果</button>
+    <button onclick="clearAll()">清空全部</button>
+</div>
+
+</div>
+
+<script>
+const API_DEFAULT = "https://api.yuzusoft.pw/float.go";
+document.getElementById("api").value = API_DEFAULT;
+
+/* 随机生成 1~10 位 36 进制 key */
+function genKey() {
+    const chars = "0123456789abcdefghijklmnopqrstuvwxyz";
+    const len = Math.floor(Math.random() * 10) + 1;
+    let s = "";
+    for (let i = 0; i < len; i++) {
+        s += chars[Math.floor(Math.random() * chars.length)];
+    }
+    document.getElementById("key").value = s;
+}
+
+function setStatus(msg, type) {
+    const el = document.getElementById("status");
+    el.textContent = msg;
+    el.className = "status" + (type ? " " + type : "");
+}
+
+function setOutput(msg) {
+    document.getElementById("output").value = msg;
+}
+
+function getKey() {
+    return document.getElementById("key").value.trim().toLowerCase();
+}
+
+function validateKey(key) {
+    if (key === "") return true;
+    if (key.length > 10) {
+        setStatus("Key 不能超过 10 位", "err");
+        return false;
+    }
+    if (!/^[0-9a-z]+$/.test(key)) {
+        setStatus("Key 只能包含 0-9 和 a-z（36进制）", "err");
+        return false;
+    }
+    return true;
+}
+
+/* ===== GET：字符串 ===== */
+function sendGet() {
+    const mode = document.getElementById("mode").value;
+    const key = getKey();
+    const input = document.getElementById("textInput").value.trim();
+
+    if (!input) { setStatus("请输入字符串", "err"); return; }
+    if (!validateKey(key)) return;
+
+    let url = API_DEFAULT + "?";
+    const params = [];
+    if (key !== "") params.push("key=" + encodeURIComponent(key));
+    if (mode === "encrypt") {
+        params.push("utf=" + encodeURIComponent(input));
+    } else {
+        params.push("float=" + encodeURIComponent(input));
+    }
+    url += params.join("&");
+
+    setStatus("GET 请求中...");
+    fetch(url)
+        .then(async res => {
+            const text = await res.text();
+            if (!res.ok) throw new Error("HTTP " + res.status + " - " + text);
+            return text.trim();
+        })
+        .then(data => {
+            setOutput(data);
+            setStatus("GET 请求成功", "ok");
+        })
+        .catch(err => {
+            setOutput("");
+            setStatus("请求失败：" + err.message, "err");
+        });
+}
+
+/* ===== POST：文件 ===== */
+function sendPost() {
+    const mode = document.getElementById("mode").value;
+    const key = getKey();
+    const file = document.getElementById("fileInput").files[0];
+
+    if (!file) { setStatus("请选择文件", "err"); return; }
+    if (!validateKey(key)) return;
+
+    const reader = new FileReader();
+    reader.onload = function () {
+        let url = API_DEFAULT;
+        if (key !== "") url += "?key=" + encodeURIComponent(key);
+
+        const contentType = mode === "decrypt" ? "application/json" : "text/plain";
+
+        setStatus("POST 请求中...");
+        fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": contentType },
+            body: reader.result
+        })
+        .then(async res => {
+            const text = await res.text();
+            if (!res.ok) throw new Error("HTTP " + res.status + " - " + text);
+            return text.trim();
+        })
+        .then(data => {
+            setOutput(data);
+            setStatus("POST 请求成功，文件大小 " + file.size + " 字节", "ok");
+        })
+        .catch(err => {
+            setOutput("");
+            setStatus("请求失败：" + err.message, "err");
+        });
+    };
+    reader.onerror = function () {
+        setStatus("文件读取失败", "err");
+    };
+    reader.readAsText(file);
+}
+
+/* 复制结果 */
+function copyResult() {
+    const out = document.getElementById("output");
+    if (!out.value) { setStatus("没有可复制的内容", "err"); return; }
+    navigator.clipboard.writeText(out.value).then(
+        () => setStatus("已复制到剪贴板", "ok"),
+        () => setStatus("复制失败，请手动复制", "err")
+    );
+}
+
+/* 清空全部 */
+function clearAll() {
+    document.getElementById("textInput").value = "";
+    document.getElementById("fileInput").value = "";
+    document.getElementById("key").value = "";
+    document.getElementById("output").value = "";
+    document.getElementById("mode").selectedIndex = 0;
+    setStatus("已清空全部内容");
+}
+</script>
+</body>
+</html>
+
