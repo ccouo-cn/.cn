@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>腾讯微云解析</title>
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --surface-2: #161616;
+  --border: #1f1f1f;
+  --border-hover: #333333;
+  --text: #ededed;
+  --text-2: #a1a1a1;
+  --text-3: #666666;
+  --accent: #ffffff;
+  --accent-fg: #0a0a0a;
+  --green: #4ade80;
+  --red: #f87171;
+  --mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Layout ---------- */
+.shell {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+header {
+  margin-bottom: 36px;
+}
+header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+header p {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 6px;
+}
+
+/* ---------- Input ---------- */
+.input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.input-row input {
+  flex: 1;
+  height: 40px;
+  padding: 0 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--mono);
+  outline: none;
+  transition: border-color .15s ease;
+}
+.input-row input::placeholder { color: var(--text-3); }
+.input-row input:focus { border-color: var(--text-2); }
+
+.btn {
+  height: 40px;
+  padding: 0 20px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity .15s ease;
+  font-family: var(--sans);
+}
+.btn:hover { opacity: .85; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ---------- Status bar ---------- */
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--text-3);
+  margin-bottom: 24px;
+}
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--text-3);
+  flex-shrink: 0;
+}
+.dot.fetching { background: var(--green); animation: pulse 1.2s ease-in-out infinite; }
+.dot.error { background: var(--red); }
+.dot.success { background: var(--green); }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+
+/* ---------- Section divider ---------- */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 28px 0;
+}
+
+/* ---------- Profile ---------- */
+.profile {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.avatar {
+  width: 52px; height: 52px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.profile-body { flex: 1; min-width: 0; }
+.profile-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+.profile-row .label {
+  color: var(--text-3);
+  width: 56px;
+  flex-shrink: 0;
+}
+.profile-row .value {
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  word-break: break-all;
+}
+.profile-row .value.muted { color: var(--text-2); }
+
+/* ---------- Images ---------- */
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.img-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--surface);
+  transition: border-color .15s ease;
+}
+.img-card:hover { border-color: var(--border-hover); }
+.img-card .thumb-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.img-card img.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+}
+.img-card .thumb-fallback {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--text-3);
+  font-family: var(--mono);
+}
+.img-card .url-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--border);
+}
+.img-card .url-text {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.img-card .url-text:hover { color: var(--text); }
+.copy-btn {
+  flex-shrink: 0;
+  height: 24px;
+  padding: 0 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-2);
+  font-size: 11px;
+  font-family: var(--mono);
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.copy-btn:hover {
+  border-color: var(--text-2);
+  color: var(--text);
+}
+.copy-btn.copied {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* ---------- Code block (API demo) ---------- */
+.demo-section { margin-top: 36px; }
+.demo-section h2 {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+.code-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--text);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.code-block .c-key { color: #7dd3fc; }
+.code-block .c-str { color: #a5f3fc; }
+.code-block .c-num { color: #fde68a; }
+.code-block .c-comment { color: var(--text-3); }
+.code-block .c-method { color: #4ade80; }
+.code-block .c-url { color: #c4b5fd; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--surface-2);
+  border: 1px solid var(--border-hover);
+  color: var(--text);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: var(--mono);
+  opacity: 0;
+  pointer-events: none;
+  transition: all .25s ease;
+  z-index: 1000;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast.error { border-color: var(--red); color: var(--red); }
+.toast.success { border-color: var(--green); color: var(--green); }
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.lightbox.open { display: flex; }
+.lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.lightbox .lb-close {
+  position: absolute;
+  top: 20px; right: 24px;
+  background: none; border: none;
+  color: var(--text-2);
+  font-size: 28px;
+  cursor: pointer;
+  font-family: var(--sans);
+  line-height: 1;
+}
+.lightbox .lb-close:hover { color: var(--text); }
+.lightbox .lb-counter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .shell { padding: 28px 14px 60px; }
+  .input-row { flex-direction: column; }
+  .input-row .btn { width: 100%; }
+  .profile-row { flex-direction: column; gap: 2px; }
+  .profile-row .label { width: auto; }
+  .images-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <header>
+    <h1>Sharechain Parser</h1>
+    <p>输入微云或 QQ 收藏分享链接，解析图片与元信息</p>
+  </header>
+
+  <!-- Input -->
+  <div class="input-row">
+    <input id="urlInput" type="text" placeholder="https://share.weiyun.com/xxxx"
+           autocomplete="off" spellcheck="false"
+           onkeydown="if(event.key==='Enter') startParse()">
+    <button class="btn" id="parseBtn" onclick="startParse()">解析</button>
+  </div>
+
+  <!-- Status -->
+  <div class="statusbar">
+    <div class="dot" id="statusDot"></div>
+    <span id="statusText">idle</span>
+  </div>
+
+  <!-- Result area (hidden until success) -->
+  <div id="resultArea" style="display:none;">
+
+    <!-- Profile -->
+    <div class="profile">
+      <img class="avatar" id="avatarImg" src="" alt="avatar" referrerpolicy="no-referrer">
+      <div class="profile-body">
+        <div class="profile-row">
+          <span class="label">name</span>
+          <span class="value" id="rName">-</span>
+        </div>
+        <div class="profile-row">
+          <span class="label">qq</span>
+          <span class="value muted" id="rQQ">-</span>
+        </div>
+        <div class="profile-row">
+          <span class="label">text</span>
+          <span class="value muted" id="rTxt">-</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Images -->
+    <div id="imagesContainer"></div>
+
+    <div class="divider"></div>
+
+    <!-- Raw JSON -->
+    <div style="margin-bottom: 8px;">
+      <button class="btn" id="rawToggleBtn" style="height:32px;padding:0 14px;font-size:12px;"
+              onclick="toggleRaw()">查看原始 JSON</button>
+    </div>
+    <div class="code-block" id="rawJsonBlock" style="display:none;"></div>
+
+  </div><!-- /resultArea -->
+
+  <!-- API Demo Section -->
+  <div class="demo-section">
+    <h2>API 调用示例</h2>
+    <div class="code-block" id="apiDemo"><span class="c-comment">// 加载中...</span></div>
+  </div>
+
+</div><!-- /shell -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lb-close" onclick="closeLightbox(event)">×</button>
+  <img id="lbImg" src="" alt="" referrerpolicy="no-referrer">
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<script>
+// ===== Backend URL =====
+const API_BASE = 'https://api.yuzusoft.pw/sharechain.go';
+
+// ===== State =====
+let currentImages = [];
+let currentIndex = 0;
+let rawJson = null;
+
+// ===== Init: render API demo =====
+renderApiDemo();
+
+function renderApiDemo() {
+  const demo = document.getElementById('apiDemo');
+  demo.innerHTML =
+`<span class="c-comment"># 1. 接口地址</span>
+<span class="c-method">GET</span> <span class="c-url">${API_BASE}</span>
+
+<span class="c-comment"># 2. 请求参数 (Query)</span>
+  url=<span class="c-str">https://share.weiyun.com/xxxx</span>
+
+<span class="c-comment"># 3. cURL 示例</span>
+curl <span class="c-url">"${API_BASE}?url=https://share.weiyun.com/xxxx"</span>
+
+<span class="c-comment"># 4. 返回 JSON 结构</span>
+{
+  <span class="c-key">"qq"</span>:   <span class="c-str">"12345678"</span>,
+  <span class="c-key">"name"</span>: <span class="c-str">"昵称"</span>,
+  <span class="c-key">"head"</span>: <span class="c-str">"https://thirdqq.qlogo.cn/..."</span>,
+  <span class="c-key">"txt"</span>:  <span class="c-str">"分享描述内容"</span>,
+  <span class="c-key">"img1"</span>: <span class="c-str">"http://shp.qpic.cn/collector/.../thumb.jpg"</span>,
+  <span class="c-key">"img2"</span>: <span class="c-str">"http://shp.qpic.cn/collector/.../thumb.jpg"</span>
+}
+
+<span class="c-comment"># 5. JavaScript 调用</span>
+<span class="c-key">const</span> url = <span class="c-str">"https://share.weiyun.com/xxxx"</span>;
+<span class="c-key">const</span> res = <span class="c-key">await</span> fetch(<span class="c-url">\`${API_BASE}?url=\${encodeURIComponent(url)}\`</span>);
+<span class="c-key">const</span> data = <span class="c-key">await</span> res.json();
+console.log(data);`;
+}
+
+// ===== Parse =====
+async function startParse() {
+  const input = document.getElementById('urlInput').value.trim();
+  if (!input) { showToast('请输入分享链接', 'error'); return; }
+  if (!/^https?:\/\//i.test(input)) { showToast('链接必须以 http(s):// 开头', 'error'); return; }
+
+  setStatus('fetching', '解析中...');
+  const btn = document.getElementById('parseBtn');
+  btn.disabled = true;
+
+  try {
+    const resp = await fetch(API_BASE + '?url=' + encodeURIComponent(input), {
+      headers: { 'Accept': 'application/json' }
+    });
+    const data = await resp.json();
+
+    if (!resp.ok || data.error) {
+      throw new Error(data.error || ('HTTP ' + resp.status));
+    }
+
+    rawJson = data;
+    renderResult(data);
+    setStatus('success', '解析成功');
+    showToast('解析成功', 'success');
+  } catch (err) {
+    setStatus('error', '失败: ' + err.message);
+    showToast('解析失败: ' + err.message, 'error');
+  }
+
+  btn.disabled = false;
+}
+
+// ===== Render result =====
+function renderResult(data) {
+  document.getElementById('resultArea').style.display = 'block';
+
+  // Avatar
+  const av = document.getElementById('avatarImg');
+  if (data.head && data.head !== '0') {
+    av.src = data.head;
+  } else {
+    av.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="52" height="52"><rect width="52" height="52" fill="%23111" stroke="%231f1f1f"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="10" fill="%23666" font-family="monospace">N/A</text></svg>';
+  }
+  av.onerror = function() {
+    this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="52" height="52"><rect width="52" height="52" fill="%23111" stroke="%231f1f1f"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="10" fill="%23666" font-family="monospace">ERR</text></svg>';
+  };
+
+  // Text fields
+  document.getElementById('rName').textContent = (data.name && data.name !== '0') ? data.name : '-';
+  document.getElementById('rName').className = 'value' + ((data.name && data.name !== '0') ? '' : ' muted');
+  document.getElementById('rQQ').textContent = (data.qq && data.qq !== '0') ? data.qq : '-';
+  document.getElementById('rTxt').textContent = (data.txt && data.txt !== '0') ? data.txt : '(无描述)';
+
+  // Images
+  const container = document.getElementById('imagesContainer');
+  container.innerHTML = '';
+  currentImages = [];
+
+  let i = 1;
+  while (data['img' + i]) {
+    const url = data['img' + i];
+    currentImages.push(url);
+    const idx = i - 1;
+
+    const card = document.createElement('div');
+    card.className = 'img-card';
+    card.innerHTML = `
+      <div class="thumb-wrap">
+        <img class="thumb" src="${esc(url)}" alt="img${i}" referrerpolicy="no-referrer"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+             onclick="openLightbox(${idx})">
+        <div class="thumb-fallback" style="display:none;">failed</div>
+      </div>
+      <div class="url-row">
+        <span class="url-text" title="点击打开原图" onclick="window.open('${esc(url)}','_blank')">${esc(url)}</span>
+        <button class="copy-btn" onclick="copyText('${esc(url)}', this)">点击复制图片链</button>
+      </div>
+    `;
+    container.appendChild(card);
+    i++;
+  }
+
+  if (currentImages.length === 0) {
+    container.innerHTML = '<div style="color:var(--text-3);font-size:13px;padding:12px 0;">该分享未包含图片</div>';
+  }
+
+  // Raw JSON
+  const rawBlock = document.getElementById('rawJsonBlock');
+  rawBlock.style.display = 'none';
+  rawBlock.textContent = JSON.stringify(data, null, 2);
+  document.getElementById('rawToggleBtn').textContent = '查看原始 JSON';
+}
+
+// ===== Copy =====
+async function copyText(text, btnEl) {
+  try {
+    await navigator.clipboard.writeText(text);
+    if (btnEl) {
+      btnEl.textContent = 'copied';
+      btnEl.classList.add('copied');
+      setTimeout(() => { btnEl.textContent = 'copy'; btnEl.classList.remove('copied'); }, 1500);
+    }
+    showToast('已复制', 'success');
+  } catch {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('已复制', 'success');
+  }
+}
+
+// ===== Toggle raw JSON =====
+function toggleRaw() {
+  const block = document.getElementById('rawJsonBlock');
+  const btn = document.getElementById('rawToggleBtn');
+  if (block.style.display === 'block') {
+    block.style.display = 'none';
+    btn.textContent = '查看原始 JSON';
+  } else {
+    block.style.display = 'block';
+    btn.textContent = '收起 JSON';
+  }
+}
+
+// ===== Lightbox =====
+function openLightbox(index) {
+  currentIndex = index;
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lbImg');
+  img.src = currentImages[index];
+  document.getElementById('lbCounter').textContent = (index + 1) + ' / ' + currentImages.length;
+  lb.classList.add('open');
+}
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && e.target.tagName !== 'BUTTON') return;
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight' && currentIndex < currentImages.length - 1) openLightbox(currentIndex + 1);
+  if (e.key === 'ArrowLeft' && currentIndex > 0) openLightbox(currentIndex - 1);
+});
+
+// ===== Status =====
+function setStatus(state, text) {
+  const dot = document.getElementById('statusDot');
+  const txt = document.getElementById('statusText');
+  dot.className = 'dot' + (state !== 'idle' ? ' ' + state : '');
+  txt.textContent = text;
+}
+
+// ===== Toast =====
+let toastTimer = null;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 2200);
+}
+
+// ===== Util =====
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+</script>
+</body>
+</html>
+
