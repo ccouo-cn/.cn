@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title></title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:#faf6f7;
+  font-family:-apple-system,"Roboto","Noto Sans SC",sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+
+#page-loading{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:#faf6f7;font-size:15px;color:#e91e63;z-index:999;
+}
+#page-loading.hide{display:none;}
+
+/* ===== 跑马灯轮播 ===== */
+.carousel-section{
+  background:#faf6f7;
+  padding:12px 0 8px;
+  margin-bottom:4px;
+}
+.carousel{
+  width:100%;height:200px;
+  position:relative;perspective:500px;overflow:hidden;
+}
+.track{
+  width:100%;height:100%;position:relative;
+  transform-style:preserve-3d;
+  display:flex;align-items:center;justify-content:center;
+}
+.slide{
+  position:absolute;width:130px;height:165px;
+  border-radius:14px;overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 4px 18px rgba(233,30,99,0.25);
+  will-change:transform,opacity,filter;
+}
+.slide img{
+  width:100%;height:100%;object-fit:cover;border-radius:14px;
+}
+.slide .info{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(233,30,99,0.85));
+  padding:18px 10px 8px;
+  border-radius:0 0 14px 14px;
+  opacity:0;transition:opacity 0.3s ease;
+}
+.slide.active .info{opacity:1;}
+.slide .name{
+  color:#fff;font-size:12px;font-weight:600;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  padding:0;
+}
+.slide .author{
+  color:rgba(255,255,255,0.8);font-size:9px;margin-top:2px;
+}
+.carousel-dots{
+  display:flex;justify-content:center;gap:5px;margin-top:6px;
+}
+.carousel-dots .dot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(233,30,99,0.3);transition:background 0.3s,width 0.3s;
+}
+.carousel-dots .dot.active{
+  background:#e91e63;width:12px;border-radius:3px;
+}
+
+/* ===== 分类网格 ===== */
+.section{margin-bottom:6px;}
+
+.section-title{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:15px;font-weight:600;color:#e91e63;
+  padding:14px 14px 10px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:opacity .15s;
+}
+.section-title:active{opacity:0.5;}
+
+.more{
+  font-size:12px;font-weight:400;color:#ec407a;
+  display:flex;align-items:center;gap:2px;
+}
+.more .arrow{font-size:13px;}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  padding:0 12px;
+}
+
+.card{
+  background:transparent;border-radius:10px;overflow:hidden;
+  text-decoration:none;color:inherit;display:block;position:relative;
+}
+.card:active{opacity:0.85;}
+
+.cover{
+  width:100%;aspect-ratio:3/4;position:relative;overflow:hidden;
+  border-radius:10px;background:#fce4ec;
+}
+
+.cover img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;display:block;
+  opacity:0;transition:opacity .5s ease;
+}
+.cover img.on{opacity:1;z-index:2;}
+
+.author{
+  position:absolute;top:6px;right:6px;
+  background:rgba(233,30,99,.9);color:#fff;
+  font-size:10px;padding:2px 7px;
+  border-radius:10px;font-weight:500;z-index:5;
+}
+
+.dots{
+  position:absolute;bottom:5px;left:0;right:0;
+  display:flex;justify-content:center;gap:4px;z-index:5;
+}
+.dot{
+  width:4px;height:4px;border-radius:50%;
+  background:rgba(255,255,255,.55);
+  transition:background .2s,transform .2s;
+}
+.dot.on{background:#fff;transform:scale(1.4);}
+
+.name{
+  font-size:12px;color:#333;
+  padding:6px 2px 4px;line-height:1.3;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-weight:500;
+}
+
+.empty{
+  text-align:center;padding:60px 20px;color:#e91e63;font-size:14px;
+}
+</style>
+</head>
+<body>
+
+<div id="page-loading">加载中...</div>
+
+<!-- 跑马灯 -->
+<div class="carousel-section" id="carousel-section">
+  <div class="carousel" id="carousel">
+    <div class="track" id="track"></div>
+  </div>
+  <div class="carousel-dots" id="carousel-dots"></div>
+</div>
+
+<!-- 分类网格 -->
+<div id="list"></div>
+
+<script>
+(function(){
+
+  /* ========== 1. 跑马灯（写死数据） ========== */
+  var CAROUSEL_DATA = [
+    { name:"娇小少女的小夜曲", uploadAuthor:"萝莉王", imageUrl:"https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8U89Gmy0CqyctiDYyEdurzfYS5MBmlqXyp1ZOCS0z7GGqMI..HbiYBbTLYHS7ZZkEdo8.DLRXGkSjgbos7EpTgg!/c=&bo=sANOArADTgIWADA!&ek=1&t=8&tl=1" },
+    { name:"每日亲吻洛丽塔", uploadAuthor:"萝莉王", imageUrl:"https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8U89Gmy0CqyctiDYyEdurzcugzyAbbP1pCp0.7vwEDBjsVdAKF2fogTIGeXszSrx5cTwmnu3r4qWbZLZGF8lF0s!/c=&bo=WAfrBVgH6wUWADA!&ek=1&t=8&tl=1" },
+    { name:"同居恋人洛丽塔", uploadAuthor:"萝莉王", imageUrl:"https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8U89Gmy0CqyctiDYyEdurzc17Ph.qBFwcoG87FRQ2izIJI*hSr5Xh*AlMRKbygrASOC7YTk0gyF0wLxXGiz*ZV0!/c=&bo=WAfoBFgH6AQWADA!&ek=1&t=8&tl=1" },
+    { name:"千恋万花", uploadAuthor:"萝莉王", imageUrl:"https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8U89Gmy0CqyctiDYyEdurzfEXi0pjWarR..TIhUqkNP14080SbFSK3qexn*hsfr75rWM9*PdV3iKhCu3bS4gDps!/c=&bo=WAcJBFgHCQQWADA!&ek=1&t=8&tl=1" },
+    { name:"亚托莉", uploadAuthor:"萝莉王", imageUrl:"https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8U89Gmy0CqyctiDYyEdurzeALOYdkGw7qrd6TMNO0RTXO1CUcgcki0pmX1eWgh8ehNttSDWyYAI4jCekdaubmPg!/c=&bo=WAfsA1gH7AMWADA!&ek=1&t=8&tl=1" }
+  ];
+
+  initCarousel(CAROUSEL_DATA);
+
+  function initCarousel(list) {
+    var track = document.getElementById('track');
+    var dotsWrap = document.getElementById('carousel-dots');
+
+    list.forEach(function(item) {
+      var div = document.createElement('div');
+      div.className = 'slide';
+      div.onclick = function() {
+        if(window.Android) Android.onNextClick('g.html?ini=' + encodeURIComponent(getIni()) + '&name=' + encodeURIComponent(item.name));
+      };
+      div.innerHTML =
+        '<img src="' + item.imageUrl + '" referrerpolicy="no-referrer">' +
+        '<div class="info">' +
+          '<div class="name">' + item.name + '</div>' +
+          '<div class="author">' + item.uploadAuthor + '</div>' +
+        '</div>';
+      track.appendChild(div);
+    });
+
+    var slideEls = track.children;
+    var realCount = slideEls.length;
+    var current = 1;
+
+    var dots = [];
+    for (var i = 0; i < realCount; i++) {
+      var d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      dotsWrap.appendChild(d);
+      dots.push(d);
+    }
+
+    var firstClone = slideEls[0].cloneNode(true);
+    var lastClone = slideEls[realCount - 1].cloneNode(true);
+    track.insertBefore(lastClone, slideEls[0]);
+    track.appendChild(firstClone);
+    var allSlides = track.children;
+
+    function layout(animate) {
+      for (var i = 0; i < allSlides.length; i++) {
+        allSlides[i].style.transition = animate
+          ? 'transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.45s ease, filter 0.45s ease'
+          : 'none';
+      }
+      for (var i = 0; i < allSlides.length; i++) {
+        var diff = i - current;
+        var ad = Math.abs(diff);
+        if (diff === 0) {
+          allSlides[i].style.transform = 'translateX(0) scale(1) rotateY(0deg)';
+          allSlides[i].style.opacity = '1';
+          allSlides[i].style.zIndex = '10';
+          allSlides[i].style.filter = 'blur(0px)';
+          allSlides[i].className = 'slide active';
+        } else {
+          var x = diff * 95;
+          var scale = 1 - ad * 0.1;
+          var rotY = diff > 0 ? -22 : 22;
+          allSlides[i].style.transform = 'translateX(' + x + 'px) scale(' + scale + ') rotateY(' + rotY + 'deg)';
+          allSlides[i].style.opacity = ad > 2 ? '0' : (1 - ad * 0.22);
+          allSlides[i].style.zIndex = 10 - ad;
+          allSlides[i].style.filter = 'blur(' + (ad * 1.5) + 'px)';
+          allSlides[i].className = 'slide';
+        }
+      }
+      var realIdx = ((current - 1) % realCount + realCount) % realCount;
+      for (var i = 0; i < dots.length; i++) {
+        dots[i].className = 'dot' + (i === realIdx ? ' active' : '');
+      }
+    }
+
+    var startX = 0, isDragging = false;
+    track.addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX; isDragging = true; clearInterval(autoTimer);
+    });
+    track.addEventListener('touchend', function(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      var diff = e.changedTouches[0].clientX - startX;
+      if (Math.abs(diff) > 40) { if (diff < 0) current++; else current--; layout(true); }
+      autoTimer = setInterval(next, 3000);
+    });
+
+    function next() { current++; layout(true); }
+    var autoTimer = setInterval(next, 3000);
+    var isJumping = false;
+    track.addEventListener('transitionend', function() {
+      if (isJumping) return;
+      if (current === realCount + 1) {
+        isJumping = true; current = 1; layout(false);
+        requestAnimationFrame(function() { requestAnimationFrame(function() { isJumping = false; }); });
+      }
+      if (current === 0) {
+        isJumping = true; current = realCount; layout(false);
+        requestAnimationFrame(function() { requestAnimationFrame(function() { isJumping = false; }); });
+      }
+    });
+
+    layout(false);
+    window.addEventListener('resize', function() { layout(false); });
+  }
+
+  /* ========== 2. 分类网格（从 ini 加载） ========== */
+  var list = document.getElementById('list');
+  var sp = new URLSearchParams(location.search);
+  var ini = sp.get('ini');
+
+  var catMap = { 'm':'萌作', 'x':'校园' };
+
+  if (!ini) {
+    showError('缺少ini参数', 'ini=空', location.href);
+    return;
+  }
+
+  fetch(ini, { cache:'no-store' })
+    .then(function(r) { return r.ok ? r.text() : Promise.reject('http ' + r.status); })
+    .then(function(text) {
+      document.getElementById('page-loading').classList.add('hide');
+
+      var lines = text.split(/\r?\n/).filter(function(s) { return s.trim(); });
+      var groups = {};
+      lines.forEach(function(line) {
+        var p = line.split(',');
+        if (p.length < 5) return;
+        var cat = p[2];
+        if (!groups[cat]) groups[cat] = [];
+        groups[cat].push(p);
+      });
+
+      Object.keys(catMap).forEach(function(cat) {
+        if (!groups[cat] || groups[cat].length === 0) return;
+
+        var section = document.createElement('div');
+        section.className = 'section';
+
+        var title = document.createElement('div');
+        title.className = 'section-title';
+
+        var left = document.createElement('span');
+        left.textContent = catMap[cat];
+
+        var more = document.createElement('span');
+        more.className = 'more';
+        more.innerHTML = '加载更多 <span class="arrow">﹥</span>';
+        more.onclick = function(ev) {
+          ev.stopPropagation();
+          if(window.Android) Android.onNextClick('./www.html?ini=' + encodeURIComponent(ini) + '&g=' + cat);
+        };
+
+        title.appendChild(left);
+        title.appendChild(more);
+        title.onclick = function() {
+          if(window.Android) Android.onNextClick('./www.html?ini=' + encodeURIComponent(ini) + '&g=' + cat);
+        };
+
+        section.appendChild(title);
+
+        var grid = document.createElement('div');
+        grid.className = 'grid';
+
+        groups[cat].forEach(function(p) {
+          var card = document.createElement('div');
+          card.className = 'card';
+          card.onclick = function() {
+            if(window.Android) Android.onNextClick('g.html?ini=' + encodeURIComponent(ini) + '&id=' + p[0]);
+          };
+
+          var cover = document.createElement('div');
+          cover.className = 'cover';
+
+          var imgs = [];
+          for (var i = 5; i < p.length; i++) {
+            if (p[i]) imgs.push(fixUrl(p[i]));
+          }
+          if (imgs.length === 0) imgs.push('');
+
+          var imgEls = [];
+          var currentIdx = 0;
+
+          imgs.forEach(function(src) {
+            var img = document.createElement('img');
+            img.referrerPolicy = 'no-referrer';
+            img.loading = 'lazy';
+            img.src = src;
+            cover.appendChild(img);
+            imgEls.push(img);
+          });
+
+          function show(idx) {
+            imgEls.forEach(function(el, i) {
+              el.classList.toggle('on', i === idx);
+            });
+          }
+          show(0);
+
+          if (imgEls.length > 1) {
+            var timer = setInterval(function() {
+              currentIdx = (currentIdx + 1) % imgEls.length;
+              show(currentIdx);
+            }, 2000 + Math.random() * 3000);
+
+            var startX = 0;
+            cover.addEventListener('touchstart', function(e) {
+              startX = e.touches[0].clientX;
+              clearInterval(timer);
+            }, { passive:true });
+            cover.addEventListener('touchend', function(e) {
+              var dx = e.changedTouches[0].clientX - startX;
+              if (dx < -20) currentIdx = (currentIdx + 1) % imgEls.length;
+              if (dx > 20) currentIdx = (currentIdx - 1 + imgEls.length) % imgEls.length;
+              show(currentIdx);
+              timer = setInterval(function() {
+                currentIdx = (currentIdx + 1) % imgEls.length;
+                show(currentIdx);
+              }, 2000 + Math.random() * 3000);
+            }, { passive:true });
+
+            var dots = document.createElement('div');
+            dots.className = 'dots';
+            imgEls.forEach(function() { dots.appendChild(document.createElement('div')); });
+            var dotEls = dots.children;
+            dotEls[0].classList.add('on');
+            cover.appendChild(dots);
+
+            setInterval(function() {
+              for (var i = 0; i < dotEls.length; i++) {
+                dotEls[i].className = 'dot' + (i === currentIdx ? ' on' : '');
+              }
+            }, 100);
+          }
+
+          var author = document.createElement('span');
+          author.className = 'author';
+          author.textContent = p[1];
+          cover.appendChild(author);
+
+          var n = document.createElement('div');
+          n.className = 'name';
+          n.textContent = p[3];
+
+          card.appendChild(cover);
+          card.appendChild(n);
+          grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        list.appendChild(section);
+      });
+
+      if (list.innerHTML === '') {
+        list.innerHTML = '<div class="empty">暂无内容</div>';
+      }
+    })
+    .catch(function(err) {
+      showError('加载失败', 'ini=' + ini, location.href);
+      console.log('ini load fail', err);
+    });
+
+  function showError(title, urlInfo, pageUrl) {
+    var box = document.getElementById('page-loading');
+    box.classList.remove('hide');
+    box.style.display = 'flex';
+    box.style.flexDirection = 'column';
+    box.style.textAlign = 'center';
+    box.style.padding = '20px';
+    box.innerHTML =
+      '<div style="font-size:16px;margin-bottom:12px;">' + escapeHtml(title) + '</div>' +
+      '<div style="font-size:12px;color:#999;word-break:break-all;">' + escapeHtml(urlInfo) + '</div>' +
+      '<div style="font-size:12px;color:#999;word-break:break-all;margin-top:6px;">url=' + escapeHtml(pageUrl || '') + '</div>';
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function fixUrl(u) {
+    if (!u) return '';
+    if (u.indexOf('k*') === 0) return 'https://pan.quark.cn/s/' + u.slice(2);
+    if (u.indexOf('g*') === 0) return 'https://cdn.jsdelivr.net/gh/ccouo-cn/image@main/' + u.slice(2);
+    if (u.indexOf('tx*') === 0) return 'https://channel.qpic.cn/psc?/channel/' + u.slice(3);
+    return u;
+  }
+
+  function getIni() { return ini; }
+
+})();
+</script>
+</body>
+</html>
