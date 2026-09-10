@@ -1,1 +1,386 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"/><script src="http://code.jquery.com/jquery-latest.min.js"></script></head><body><div id="wrap"><div id="header"><h1>html Online Tool</h1><!--欢迎来到[tool.p2hp.com]工具网站,如果您觉得还不错,麻烦分享给您的朋友,谢谢.--></div><div id="footer">This is just an example.</div></div></body></html><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport"content="width=device-width, initial-scale=1.0"><title>图片块打乱·还原</title><link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Times New Roman',Times,serif;background:#d6dfe8;color:#1c2a3a;padding:30px 28px;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23cdd8e4" /><path d="M8 8 L72 8 L72 72 L8 72 Z" fill="none" stroke="%23b2c3d4" stroke-width="1.5" /></svg>');background-repeat:repeat}.container{max-width:1300px;margin:0 auto;background:#eef3f8;border:4px double#8ea3b8;padding:26px 30px 30px 30px;box-shadow:6px 6px 14px rgba(0,0,0,0.12)}.header{border-bottom:3px double#8a9fb4;padding-bottom:10px;margin-bottom:22px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline}.header h1{font-size:34px;font-weight:700;color:#0f263b;text-shadow:2px 2px 0#c4d2df;letter-spacing:0.5px;display:flex;align-items:center;gap:12px}.header h1 i{color:#1f4e6e;font-size:34px;filter:drop-shadow(2px 2px 0#b0c2d4)}.subtitle{background:#d3dfea;padding:5px 20px;border:2px outset#a6bccf;font-size:16px;font-weight:bold;color:#0f2b40;display:inline-flex;align-items:center;gap:8px;box-shadow:inset 1px 1px 0#f4faff,inset-1px-1px 0#97acc0}.subtitle i{color:#1d4a67}.block{background:transparent;padding:8px 0 16px 0;margin-bottom:18px;border-bottom:2px solid#bacbdb}.block:last-of-type{border-bottom:none}.row{display:flex;gap:30px;flex-wrap:wrap}.col{flex:1 1 200px;min-width:170px}label{display:block;font-size:16px;font-weight:700;color:#1f344a;margin-bottom:3px;letter-spacing:0.2px}label i{margin-right:6px;color:#2d5a7a;width:18px}input[type="number"],input[type="text"]{width:100%;padding:8px 12px;border:2px inset#b3c6d8;background:#fafdff;color:#0b1f31;font-size:15px;font-family:'Courier New',Courier,monospace;margin-bottom:14px;box-shadow:inset 1px 1px 3px rgba(0,0,0,0.06)}input[type="number"]:focus,input[type="text"]:focus{border-color:#3f7193;background:#ffffff;outline:2px solid#b0c9de}input[type="file"]{width:100%;padding:6px 0 6px 6px;border:2px inset#b3c6d8;background:#fafdff;font-size:14px;font-family:'Times New Roman',Times,serif;margin-bottom:14px;cursor:pointer}input[type="file"]::file-selector-button{background:#d7e2ed;border:2px outset#b3c6da;padding:4px 18px;font-weight:bold;color:#1b3349;margin-right:18px;cursor:pointer;font-family:'Times New Roman',Times,serif;font-size:14px}input[type="file"]::file-selector-button:hover{background:#c4d3e2;border-color:#9bb0c4}.checkbox-group{display:flex;flex-wrap:wrap;gap:24px 44px;margin:6px 0 14px 0;background:#e1e9f2;padding:8px 18px;border:2px ridge#b3c6d8}.checkbox-group label{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#102433;cursor:pointer;margin-bottom:0}.checkbox-group input[type="checkbox"]{width:18px;height:18px;accent-color:#2f5b7a;margin:0;cursor:pointer}.badge{display:inline-block;padding:0 12px;border:2px outset#b0c4d8;font-size:12px;font-weight:bold;background:#d2deea;color:#1e3c54;letter-spacing:0.5px;font-family:'Courier New',monospace;box-shadow:inset 1px 1px 0#f4faff,inset-1px-1px 0#9aafc0}.badge.on{background:#b7d0e5;border-color:#7b9eb8;color:#0a2940}.badge.off{background:#cbd7e3;color:#405b72}.btn-group{display:flex;flex-wrap:wrap;gap:16px;margin:6px 0 4px}button{padding:8px 28px;border:3px outset#bccedf;background:#dee8f2;font-size:16px;font-weight:700;color:#0f293f;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-family:'Times New Roman',Times,serif;box-shadow:2px 2px 0#7b8fa3,inset 1px 1px 0#f6faff;letter-spacing:0.3px}button i{font-size:16px;color:#1d4a66}button:hover{background:#d0deec;border-color:#a7bdd3;box-shadow:1px 1px 0#7b8fa3,inset 1px 1px 0#f6faff;transform:translate(1px,1px)}button:active{border-style:inset;box-shadow:inset 2px 2px 4px rgba(0,0,0,0.2);transform:translate(2px,2px)}.btn-primary{background:#b3cde0;border-color:#8aadc7;color:#062336}.btn-primary i{color:#0b3b57}.btn-secondary{background:#c6d4e0;border-color:#9db2c7;color:#102b40}.btn-danger{background:#e4d2d2;border-color:#c9aeb0;color:#4f2a2e}.btn-danger i{color:#8f4e54}.status{padding:10px 16px;border:3px ridge#b3c6d8;margin-top:16px;font-size:15px;display:none;background:#e4ecf5;border-left:8px solid#3f7193;font-family:'Times New Roman',Times,serif}.status.ok{display:block;background:#dce8f2;border-left-color:#2d6a8f}.status.err{display:block;background:#f3e2e2;border-left-color:#b34a4a;color:#561e1e}.hint{font-size:14px;color:#2d4b63;margin-top:16px;padding-top:12px;border-top:2px solid#b3c6d8;display:flex;align-items:center;gap:10px}.hint i{color:#3d6b88}.canvas-wrap{display:flex;gap:30px;flex-wrap:wrap;margin-top:6px}.canvas-box{flex:1 1 280px;min-width:240px}.canvas-box h3{font-size:18px;font-weight:700;color:#132b40;margin-bottom:8px;display:flex;align-items:center;gap:10px;border-bottom:2px dotted#b3c6d8;padding-bottom:4px}.canvas-box h3 i{color:#2c5a79}canvas{width:100%;height:auto;max-width:100%;background:#d5dfe9;border:4px ridge#a7bccf;display:block;box-shadow:4px 4px 6px rgba(0,0,0,0.10)}.download-link{display:inline-flex;align-items:center;gap:8px;margin-top:12px;color:#003057;text-decoration:none;font-weight:700;font-size:15px;border:3px outset#b3c6da;padding:4px 18px 4px 14px;background:#dae4ef;box-shadow:inset 1px 1px 0#f6faff,inset-1px-1px 0#9aafc0}.download-link:hover{background:#ccd9e7;border-color:#9db3c9;text-decoration:none}.download-link i{font-size:15px;color:#1d4a66}.key-input-wrapper{display:flex;gap:10px;align-items:center}.key-input-wrapper input[type="text"]{flex:1;margin-bottom:0}.btn-random-key{background:#d2dfeb;border:3px outset#b3c6da;padding:6px 18px;font-size:15px;font-weight:bold;color:#123048;cursor:pointer;font-family:'Times New Roman',Times,serif;box-shadow:inset 1px 1px 0#f6faff,inset-1px-1px 0#9aafc0;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;height:42px;flex-shrink:0}.btn-random-key:hover{background:#c2d2e2;border-color:#9db3c9}.btn-random-key i{color:#1f4e6b;font-size:16px}@media(max-width:640px){body{padding:12px}.container{padding:16px}.header{flex-direction:column;align-items:flex-start;gap:8px}.checkbox-group{flex-direction:column;gap:10px}.key-input-wrapper{flex-wrap:wrap}.btn-random-key{width:100%;justify-content:center}}</style></head><body><div class="container"><div class="header"><h1><i class="fas fa-cubes"></i>图片块打乱·还原</h1><span class="subtitle"><i class="fas fa-lock"></i>两层加密·密钥控制</span></div><!--主操作区：移除多余卡片边框--><div class="block"><div class="row"><div class="col"><label><i class="fas fa-image"></i>选择图片</label><input type="file"id="fileInput"accept="image/*"></div><div class="col"><label><i class="fas fa-key"></i>密钥(Key)</label><div class="key-input-wrapper"><input type="text"id="keyInput"value="12345"placeholder="任意数字或字符串"><button class="btn-random-key"id="btnRandomKey"title="随机6位小写hex"><i class="fas fa-shuffle"></i>随机</button></div></div></div><div class="row"><div class="col"><label><i class="fas fa-th"></i>块大小(像素)</label><input type="number"id="blockSize"value="30"min="2"max="64"step="2"></div><div class="col"><label><i class="fas fa-expand"></i>最大输出尺寸</label><input type="number"id="maxDim"value="1024"min="128"max="4096"step="128"></div></div><div class="checkbox-group"><label><input type="checkbox"id="optPermute"checked><span>块顺序置换</span><span class="badge on"id="badge1">ON</span></label><label><input type="checkbox"id="optTransform"checked><span>块内变换(旋转/翻转)</span><span class="badge on"id="badge2">ON</span></label></div><div class="btn-group"><button class="btn-primary"id="btnScramble"><i class="fas fa-arrow-right-arrow-left"></i>打乱(加密)</button><button class="btn-secondary"id="btnRestore"><i class="fas fa-undo-alt"></i>还原(解密)</button><button class="btn-danger"id="btnClear"><i class="fas fa-trash-can"></i>清空</button></div><div class="status"id="status"></div></div><!--显示区域--><div class="block"style="border-bottom: none; padding-bottom: 0;"><div class="canvas-wrap"><div class="canvas-box"><h3><i class="far fa-file-image"></i>原始/当前</h3><canvas id="canvasOriginal"></canvas></div><div class="canvas-box"><h3><i class="fas fa-wand-magic-sparkles"></i>处理后<span id="modeLabel"style="font-weight:400;color:#2d5575;"></span></h3><canvas id="canvasResult"></canvas><a href="#"class="download-link"id="downloadLink"style="display:none;"><i class="fas fa-download"></i>下载PNG</a></div></div><div class="hint"><i class="fas fa-circle-info"></i>仅使用块置换与块内变换，对JPEG友好。下载为PNG保留无损结果。</div></div></div><script>(function(){function showStatus(msg,type){const el=document.getElementById('status');el.className='status '+(type||'ok');el.style.display='block';el.textContent=msg}function randomHex6(){let result='';const chars='0123456789abcdef';for(let i=0;i<6;i++){result+=chars[Math.floor(Math.random()*16)]}return result}function hashKey(str){let h=2166136261>>>0;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return h>>>0}function mulberry32(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}function shuffleArray(arr,rng){for(let i=arr.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}function loadImage(src){return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=src})}function getCanvasContext(canvas,w,h){canvas.width=w;canvas.height=h;return canvas.getContext('2d')}async function process(doScramble){const fileInput=document.getElementById('fileInput');const key=document.getElementById('keyInput').value||'12345';const blockSize=parseInt(document.getElementById('blockSize').value)||8;const maxDim=parseInt(document.getElementById('maxDim').value)||1024;const optPermute=document.getElementById('optPermute').checked;const optTransform=document.getElementById('optTransform').checked;if(!fileInput.files.length){showStatus('请先选择一张图片','err');return}let img;try{const url=URL.createObjectURL(fileInput.files[0]);img=await loadImage(url)}catch{showStatus('图片加载失败，请重试','err');return}let{width:w,height:h}=img;if(Math.max(w,h)>maxDim){if(w>h){h=Math.round(h*maxDim/w);w=maxDim}else{w=Math.round(w*maxDim/h);h=maxDim}}const cols=Math.floor(w/blockSize);const rows=Math.floor(h/blockSize);w=cols*blockSize;h=rows*blockSize;const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,w,h);const imageData=ctx.getImageData(0,0,w,h);const data=imageData.data;const numBlocks=cols*rows;const seed=hashKey(String(key));const rng=mulberry32(seed);const order=optPermute?shuffleArray([...Array(numBlocks).keys()],rng):[...Array(numBlocks).keys()];const transforms=optTransform?Array.from({length:numBlocks},()=>Math.floor(rng()*8)):new Array(numBlocks).fill(0);const result=new ImageData(w,h);const rdata=result.data;const bs=blockSize;if(doScramble){for(let newPos=0;newPos<numBlocks;newPos++){const srcPos=order[newPos];const tf=transforms[srcPos];const newBX=newPos%cols,newBY=Math.floor(newPos/cols);const srcBX=srcPos%cols,srcBY=Math.floor(srcPos/cols);for(let y=0;y<bs;y++){for(let x=0;x<bs;x++){let sx=x,sy=y;switch(tf){case 1:sx=bs-1-x;break;case 2:sy=bs-1-y;break;case 3:sx=bs-1-x;sy=bs-1-y;break;case 4:sx=y;sy=x;break;case 5:sx=y;sy=bs-1-x;break;case 6:sx=bs-1-y;sy=x;break;case 7:sx=bs-1-y;sy=bs-1-x;break}const srcIdx=((srcBY*bs+sy)*w+(srcBX*bs+sx))*4;const dstIdx=((newBY*bs+y)*w+(newBX*bs+x))*4;rdata[dstIdx]=data[srcIdx];rdata[dstIdx+1]=data[srcIdx+1];rdata[dstIdx+2]=data[srcIdx+2];rdata[dstIdx+3]=data[srcIdx+3]}}}}else{for(let i=0;i<rdata.length;i++)rdata[i]=data[i];const temp=new Uint8ClampedArray(bs*bs*4);for(let newPos=0;newPos<numBlocks;newPos++){const srcPos=order[newPos];const tf=transforms[srcPos];const newBX=newPos%cols,newBY=Math.floor(newPos/cols);const srcBX=srcPos%cols,srcBY=Math.floor(srcPos/cols);for(let y=0;y<bs;y++){for(let x=0;x<bs;x++){const si=((newBY*bs+y)*w+(newBX*bs+x))*4;const ti=(y*bs+x)*4;temp[ti]=data[si];temp[ti+1]=data[si+1];temp[ti+2]=data[si+2];temp[ti+3]=data[si+3]}}for(let y=0;y<bs;y++){for(let x=0;x<bs;x++){let sx=x,sy=y;switch(tf){case 1:sx=bs-1-x;break;case 2:sy=bs-1-y;break;case 3:sx=bs-1-x;sy=bs-1-y;break;case 4:sx=y;sy=x;break;case 5:sx=bs-1-y;sy=x;break;case 6:sx=y;sy=bs-1-x;break;case 7:sx=bs-1-y;sy=bs-1-x;break}const ti=(sy*bs+sx)*4;const di=((srcBY*bs+y)*w+(srcBX*bs+x))*4;rdata[di]=temp[ti];rdata[di+1]=temp[ti+1];rdata[di+2]=temp[ti+2];rdata[di+3]=temp[ti+3]}}}}const resCanvas=document.getElementById('canvasResult');const rctx=getCanvasContext(resCanvas,w,h);rctx.putImageData(result,0,0);const origCanvas=document.getElementById('canvasOriginal');const octx=getCanvasContext(origCanvas,w,h);octx.drawImage(img,0,0,w,h);document.getElementById('modeLabel').textContent=doScramble?'(打乱后)':'(还原后)';const link=document.getElementById('downloadLink');link.style.display='inline-flex';resCanvas.toBlob((blob)=>{const url=URL.createObjectURL(blob);link.href=url;link.download=doScramble?'scrambled.png':'restored.png'},'image/png');showStatus((doScramble?'打乱完成':'还原完成')+`·尺寸${w}×${h}·块${cols}×${rows}·密钥"${key}"`+(doScramble?'':' (需密钥/参数完全匹配)'),'ok')}document.getElementById('btnScramble').addEventListener('click',()=>process(true));document.getElementById('btnRestore').addEventListener('click',()=>process(false));document.getElementById('btnClear').addEventListener('click',()=>{document.getElementById('fileInput').value='';['canvasOriginal','canvasResult'].forEach(id=>{const c=document.getElementById(id);const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height)});document.getElementById('downloadLink').style.display='none';document.getElementById('modeLabel').textContent='';document.getElementById('status').style.display='none'});document.getElementById('btnRandomKey').addEventListener('click',()=>{const keyInput=document.getElementById('keyInput');keyInput.value=randomHex6();keyInput.dispatchEvent(new Event('input'))});document.getElementById('fileInput').addEventListener('change',async(e)=>{const file=e.target.files[0];if(!file)return;try{const img=await loadImage(URL.createObjectURL(file));const maxDim=parseInt(document.getElementById('maxDim').value)||1024;let{width:w,height:h}=img;if(Math.max(w,h)>maxDim){if(w>h){h=Math.round(h*maxDim/w);w=maxDim}else{w=Math.round(w*maxDim/h);h=maxDim}}const canvas=document.getElementById('canvasOriginal');const ctx=getCanvasContext(canvas,w,h);ctx.drawImage(img,0,0,w,h)}catch{}});function bindBadge(cbId,badgeId){const cb=document.getElementById(cbId);const badge=document.getElementById(badgeId);cb.addEventListener('change',()=>{badge.textContent=cb.checked?'ON':'OFF';badge.className='badge '+(cb.checked?'on':'off')})}bindBadge('optPermute','badge1');bindBadge('optTransform','badge2')})();</script></body></html>
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片块打乱·还原</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Times New Roman',Times,serif;background:#d6dfe8;color:#1c2a3a;padding:30px 28px;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23cdd8e4" /><path d="M8 8 L72 8 L72 72 L8 72 Z" fill="none" stroke="%23b2c3d4" stroke-width="1.5" /></svg>');background-repeat:repeat}
+.container{max-width:1300px;margin:0 auto;background:#eef3f8;border:4px double #8ea3b8;padding:26px 30px 30px 30px;box-shadow:6px 6px 14px rgba(0,0,0,0.12)}
+.header{border-bottom:3px double #8a9fb4;padding-bottom:10px;margin-bottom:22px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline}
+.header h1{font-size:34px;font-weight:700;color:#0f263b;text-shadow:2px 2px 0 #c4d2df;letter-spacing:0.5px;display:flex;align-items:center;gap:12px}
+.header h1 i{color:#1f4e6e;font-size:34px;filter:drop-shadow(2px 2px 0 #b0c2d4)}
+.subtitle{background:#d3dfea;padding:5px 20px;border:2px outset #a6bccf;font-size:16px;font-weight:bold;color:#0f2b40;display:inline-flex;align-items:center;gap:8px;box-shadow:inset 1px 1px 0 #f4faff,inset -1px -1px 0 #97acc0}
+.subtitle i{color:#1d4a67}
+.block{background:transparent;padding:8px 0 16px 0;margin-bottom:18px;border-bottom:2px solid #bacbdb}
+.block:last-of-type{border-bottom:none}
+.row{display:flex;gap:30px;flex-wrap:wrap}
+.col{flex:1 1 200px;min-width:170px}
+label{display:block;font-size:16px;font-weight:700;color:#1f344a;margin-bottom:3px;letter-spacing:0.2px}
+label i{margin-right:6px;color:#2d5a7a;width:18px}
+input[type="number"],input[type="text"]{width:100%;padding:8px 12px;border:2px inset #b3c6d8;background:#fafdff;color:#0b1f31;font-size:15px;font-family:'Courier New',Courier,monospace;margin-bottom:14px;box-shadow:inset 1px 1px 3px rgba(0,0,0,0.06)}
+input[type="number"]:focus,input[type="text"]:focus{border-color:#3f7193;background:#ffffff;outline:2px solid #b0c9de}
+input[type="file"]{width:100%;padding:6px 0 6px 6px;border:2px inset #b3c6d8;background:#fafdff;font-size:14px;font-family:'Times New Roman',Times,serif;margin-bottom:14px;cursor:pointer}
+input[type="file"]::file-selector-button{background:#d7e2ed;border:2px outset #b3c6da;padding:4px 18px;font-weight:bold;color:#1b3349;margin-right:18px;cursor:pointer;font-family:'Times New Roman',Times,serif;font-size:14px}
+input[type="file"]::file-selector-button:hover{background:#c4d3e2;border-color:#9bb0c4}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:24px 44px;margin:6px 0 14px 0;background:#e1e9f2;padding:8px 18px;border:2px ridge #b3c6d8}
+.checkbox-group label{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#102433;cursor:pointer;margin-bottom:0}
+.checkbox-group input[type="checkbox"]{width:18px;height:18px;accent-color:#2f5b7a;margin:0;cursor:pointer}
+.badge{display:inline-block;padding:0 12px;border:2px outset #b0c4d8;font-size:12px;font-weight:bold;background:#d2deea;color:#1e3c54;letter-spacing:0.5px;font-family:'Courier New',monospace;box-shadow:inset 1px 1px 0 #f4faff,inset -1px -1px 0 #9aafc0}
+.badge.on{background:#b7d0e5;border-color:#7b9eb8;color:#0a2940}
+.badge.off{background:#cbd7e3;color:#405b72}
+.btn-group{display:flex;flex-wrap:wrap;gap:16px;margin:6px 0 4px}
+button{padding:8px 28px;border:3px outset #bccedf;background:#dee8f2;font-size:16px;font-weight:700;color:#0f293f;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-family:'Times New Roman',Times,serif;box-shadow:2px 2px 0 #7b8fa3,inset 1px 1px 0 #f6faff;letter-spacing:0.3px}
+button i{font-size:16px;color:#1d4a66}
+button:hover{background:#d0deec;border-color:#a7bdd3;box-shadow:1px 1px 0 #7b8fa3,inset 1px 1px 0 #f6faff;transform:translate(1px,1px)}
+button:active{border-style:inset;box-shadow:inset 2px 2px 4px rgba(0,0,0,0.2);transform:translate(2px,2px)}
+.btn-primary{background:#b3cde0;border-color:#8aadc7;color:#062336}
+.btn-primary i{color:#0b3b57}
+.btn-secondary{background:#c6d4e0;border-color:#9db2c7;color:#102b40}
+.btn-danger{background:#e4d2d2;border-color:#c9aeb0;color:#4f2a2e}
+.btn-danger i{color:#8f4e54}
+.status{padding:10px 16px;border:3px ridge #b3c6d8;margin-top:16px;font-size:15px;display:none;background:#e4ecf5;border-left:8px solid #3f7193;font-family:'Times New Roman',Times,serif}
+.status.ok{display:block;background:#dce8f2;border-left-color:#2d6a8f}
+.status.err{display:block;background:#f3e2e2;border-left-color:#b34a4a;color:#561e1e}
+.hint{font-size:14px;color:#2d4b63;margin-top:16px;padding-top:12px;border-top:2px solid #b3c6d8;display:flex;align-items:center;gap:10px}
+.hint i{color:#3d6b88}
+.canvas-wrap{display:flex;gap:30px;flex-wrap:wrap;margin-top:6px}
+.canvas-box{flex:1 1 280px;min-width:240px}
+.canvas-box h3{font-size:18px;font-weight:700;color:#132b40;margin-bottom:8px;display:flex;align-items:center;gap:10px;border-bottom:2px dotted #b3c6d8;padding-bottom:4px}
+.canvas-box h3 i{color:#2c5a79}
+canvas{width:100%;height:auto;max-width:100%;background:#d5dfe9;border:4px ridge #a7bccf;display:block;box-shadow:4px 4px 6px rgba(0,0,0,0.10)}
+.download-link{display:inline-flex;align-items:center;gap:8px;margin-top:12px;color:#003057;text-decoration:none;font-weight:700;font-size:15px;border:3px outset #b3c6da;padding:4px 18px 4px 14px;background:#dae4ef;box-shadow:inset 1px 1px 0 #f6faff,inset -1px -1px 0 #9aafc0}
+.download-link:hover{background:#ccd9e7;border-color:#9db3c9;text-decoration:none}
+.download-link i{font-size:15px;color:#1d4a66}
+.key-input-wrapper{display:flex;gap:10px;align-items:center}
+.key-input-wrapper input[type="text"]{flex:1;margin-bottom:0}
+.btn-random-key{background:#d2dfeb;border:3px outset #b3c6da;padding:6px 18px;font-size:15px;font-weight:bold;color:#123048;cursor:pointer;font-family:'Times New Roman',Times,serif;box-shadow:inset 1px 1px 0 #f6faff,inset -1px -1px 0 #9aafc0;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;height:42px;flex-shrink:0}
+.btn-random-key:hover{background:#c2d2e2;border-color:#9db3c9}
+.btn-random-key i{color:#1f4e6b;font-size:16px}
+pre{margin:0 0 4px 0}
+pre code.hljs{border:3px ridge #a7bccf;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;padding:16px 18px;box-shadow:inset 2px 2px 6px rgba(0,0,0,0.25);border-radius:0}
+.code-title{font-size:15px;color:#1f344a;margin:14px 0 8px 0}
+.code-title i{color:#2d5a7a;margin-right:6px}
+.code-title code{background:#d3dfea;border:1px solid #a6bccf;padding:1px 6px;font-family:'Courier New',monospace;font-size:13px;color:#0f2b40}
+@media(max-width:640px){body{padding:12px}.container{padding:16px}.header{flex-direction:column;align-items:flex-start;gap:8px}.checkbox-group{flex-direction:column;gap:10px}.key-input-wrapper{flex-wrap:wrap}.btn-random-key{width:100%;justify-content:center}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1><i class="fas fa-cubes"></i>图片块打乱·还原</h1>
+<span class="subtitle"><i class="fas fa-lock"></i>两层加密·密钥控制</span>
+</div>
+
+<div class="block">
+<div class="row">
+<div class="col">
+<label><i class="fas fa-image"></i>选择图片</label>
+<input type="file" id="fileInput" accept="image/*">
+</div>
+<div class="col">
+<label><i class="fas fa-key"></i>密钥(Key)</label>
+<div class="key-input-wrapper">
+<input type="text" id="keyInput" value="12345" placeholder="任意数字或字符串">
+<button class="btn-random-key" id="btnRandomKey" title="随机6位小写hex"><i class="fas fa-shuffle"></i>随机</button>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col">
+<label><i class="fas fa-th"></i>块大小(像素)</label>
+<input type="number" id="blockSize" value="30" min="2" max="64" step="2">
+</div>
+<div class="col">
+<label><i class="fas fa-expand"></i>最大输出尺寸</label>
+<input type="number" id="maxDim" value="1024" min="128" max="4096" step="128">
+</div>
+</div>
+<div class="checkbox-group">
+<label><input type="checkbox" id="optPermute" checked><span>块顺序置换</span><span class="badge on" id="badge1">ON</span></label>
+<label><input type="checkbox" id="optTransform" checked><span>块内变换(旋转/翻转)</span><span class="badge on" id="badge2">ON</span></label>
+</div>
+<div class="btn-group">
+<button class="btn-primary" id="btnScramble"><i class="fas fa-arrow-right-arrow-left"></i>打乱(加密)</button>
+<button class="btn-secondary" id="btnRestore"><i class="fas fa-undo-alt"></i>还原(解密)</button>
+<button class="btn-danger" id="btnClear"><i class="fas fa-trash-can"></i>清空</button>
+</div>
+<div class="status" id="status"></div>
+</div>
+
+<div class="block">
+<div class="canvas-wrap">
+<div class="canvas-box">
+<h3><i class="far fa-file-image"></i>原始/当前</h3>
+<canvas id="canvasOriginal"></canvas>
+</div>
+<div class="canvas-box">
+<h3><i class="fas fa-wand-magic-sparkles"></i>处理后<span id="modeLabel" style="font-weight:400;color:#2d5575;"></span></h3>
+<canvas id="canvasResult"></canvas>
+<a href="#" class="download-link" id="downloadLink" style="display:none;"><i class="fas fa-download"></i>下载PNG</a>
+</div>
+</div>
+<div class="hint"><i class="fas fa-circle-info"></i>仅使用块置换与块内变换，对JPEG友好。下载为PNG保留无损结果。</div>
+</div>
+
+<div class="block" style="border-bottom:none;">
+<div class="canvas-box" style="flex:1 1 100%;">
+<h3><i class="fas fa-code"></i>JS 调用示范</h3>
+
+<p class="code-title"><i class="fas fa-link"></i>第一步：引入依赖（放在 <code>&lt;head&gt;</code> 或 <code>&lt;body&gt;</code> 里）</p>
+<pre><code class="language-html" id="codeImport"></code></pre>
+
+<p class="code-title"><i class="fas fa-terminal"></i>第二步：调用 API（完整示范）</p>
+<pre><code class="language-javascript" id="codeDemo"></code></pre>
+
+<div class="btn-group" style="margin-top:14px;">
+<button class="btn-primary" id="btnDemoRun"><i class="fas fa-play"></i>运行示范(单张打乱)</button>
+<button class="btn-secondary" id="btnDemoRound"><i class="fas fa-rotate"></i>往返测试(打乱→还原)</button>
+<button class="btn-secondary" id="btnDemoCopy"><i class="fas fa-copy"></i>复制示范代码</button>
+</div>
+<div class="status" id="demoStatus"></div>
+</div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ccouo-cn/JavaScript@main/cloud/image-scramble.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+
+  const fileInput = $('fileInput');
+  const keyInput = $('keyInput');
+  const blockSize = $('blockSize');
+  const maxDim = $('maxDim');
+  const optPermute = $('optPermute');
+  const optTransform = $('optTransform');
+  const statusEl = $('status');
+  const modeLabel = $('modeLabel');
+  const downloadLink = $('downloadLink');
+  const canvasOriginal = $('canvasOriginal');
+  const canvasResult = $('canvasResult');
+
+  let currentFile = null;
+
+  function showStatus(msg, type) {
+    statusEl.className = 'status ' + (type || 'ok');
+    statusEl.style.display = 'block';
+    statusEl.textContent = msg;
+  }
+
+  function getOptions() {
+    return {
+      key: keyInput.value || '12345',
+      blockSize: parseInt(blockSize.value) || 8,
+      maxDim: parseInt(maxDim.value) || 1024,
+      permute: optPermute.checked,
+      transform: optTransform.checked,
+      outputType: 'image/png'
+    };
+  }
+
+  function drawTo(canvas, blob) {
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      canvas.getContext('2d').drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
+  }
+
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    currentFile = file;
+    drawTo(canvasOriginal, file);
+    canvasResult.getContext('2d').clearRect(0, 0, canvasResult.width, canvasResult.height);
+    downloadLink.style.display = 'none';
+    modeLabel.textContent = '';
+    showStatus('图片已载入，可进行打乱或还原', 'ok');
+  });
+
+  async function run(doScramble) {
+    if (!currentFile) {
+      showStatus('请先选择一张图片', 'err');
+      return;
+    }
+    try {
+      const opts = getOptions();
+      const src = doScramble ? currentFile : canvasResult;
+      const fn = doScramble ? ImgScramble.scramble : ImgScramble.restore;
+      const { blob, width, height, cols, rows } = await fn(src, opts);
+
+      drawTo(canvasResult, blob);
+
+      const dlUrl = URL.createObjectURL(blob);
+      downloadLink.href = dlUrl;
+      downloadLink.download = doScramble ? 'scrambled.png' : 'restored.png';
+      downloadLink.style.display = 'inline-flex';
+
+      modeLabel.textContent = doScramble ? '(打乱后)' : '(还原后)';
+      showStatus(
+        (doScramble ? '打乱完成' : '还原完成') +
+        ` · 尺寸${width}×${height} · 块${cols}×${rows} · 密钥"${opts.key}"` +
+        (doScramble ? '' : ' (需密钥/参数完全匹配)'),
+        'ok'
+      );
+    } catch (err) {
+      console.error(err);
+      showStatus('处理失败：' + err.message, 'err');
+    }
+  }
+
+  $('btnScramble').addEventListener('click', () => run(true));
+  $('btnRestore').addEventListener('click', () => run(false));
+
+  $('btnClear').addEventListener('click', () => {
+    fileInput.value = '';
+    currentFile = null;
+    [canvasOriginal, canvasResult].forEach((c) => {
+      c.getContext('2d').clearRect(0, 0, c.width, c.height);
+    });
+    downloadLink.style.display = 'none';
+    modeLabel.textContent = '';
+    statusEl.style.display = 'none';
+  });
+
+  $('btnRandomKey').addEventListener('click', () => {
+    keyInput.value = ImgScramble.randomKey();
+  });
+
+  function bindBadge(cb, badge) {
+    const update = () => {
+      badge.textContent = cb.checked ? 'ON' : 'OFF';
+      badge.className = 'badge ' + (cb.checked ? 'on' : 'off');
+    };
+    cb.addEventListener('change', update);
+    update();
+  }
+  bindBadge(optPermute, $('badge1'));
+  bindBadge(optTransform, $('badge2'));
+
+  const IMPORT_CODE = `<script src="https://cdn.jsdelivr.net/gh/ccouo-cn/JavaScript@main/cloud/image-scramble.js"><\/script>`;
+
+  const DEMO_CODE = `// 依赖已引入，全局暴露 window.ImgScramble
+
+// 1) 静态最简调用（推荐）
+const file = document.querySelector('#fileInput').files[0];
+
+const { blob } = await ImgScramble.scramble(file, {
+  key: '1234',        // 密钥，还原时必须一致
+  blockSize: 20,      // 块大小
+  maxDim: 1024,       // 最大边
+  permute: true,      // 块顺序置换
+  transform: true,    // 块内旋转/翻转
+  outputType: 'image/png'
+});
+document.querySelector('#canvasResult').src = URL.createObjectURL(blob);
+
+// 2) 还原（参数必须与打乱时完全一致）
+const { blob: restored } = await ImgScramble.restore(blob, {
+  key: '1234', blockSize: 20, maxDim: 1024,
+  permute: true, transform: true, outputType: 'image/png'
+});
+
+// 3) 面向对象：预设默认参数，多次复用
+const tool = new ImgScramble({ key: '1234', blockSize: 20 });
+const a = await tool.scramble(file);      // 打乱
+const b = await tool.restore(a.blob);     // 还原
+
+// 4) 直接拿 URL
+const url = await ImgScramble.scrambleURL(file, { key: '1234' });
+
+// 5) 随机密钥
+const rk = ImgScramble.randomKey();       // 例: "a3f9c1"
+
+// 6) 输入源支持: File / Blob / HTMLImageElement / 图片URL字符串
+
+// 7) 返回值结构
+// { blob: Blob, width: Number, height: Number, cols: Number, rows: Number }
+`;
+
+  $('codeImport').textContent = IMPORT_CODE;
+  $('codeDemo').textContent = DEMO_CODE;
+
+  if (window.hljs) {
+    document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
+  }
+
+  const demoStatus = $('demoStatus');
+  function showDemo(msg, type) {
+    demoStatus.className = 'status ' + (type || 'ok');
+    demoStatus.style.display = 'block';
+    demoStatus.textContent = msg;
+  }
+
+  $('btnDemoRun').addEventListener('click', async () => {
+    if (typeof ImgScramble === 'undefined') {
+      showDemo('ImgScramble 未加载，请检查 CDN 链接', 'err');
+      return;
+    }
+    if (!currentFile) {
+      showDemo('请先在上方选择一张图片', 'err');
+      return;
+    }
+    try {
+      const { blob, width, height, cols, rows } = await ImgScramble.scramble(currentFile, {
+        key: '1234', blockSize: 20, maxDim: 1024, permute: true, transform: true
+      });
+      drawTo(canvasResult, blob);
+      const u = URL.createObjectURL(blob);
+      downloadLink.href = u;
+      downloadLink.download = 'demo_scrambled.png';
+      downloadLink.style.display = 'inline-flex';
+      modeLabel.textContent = '(示范打乱)';
+      showDemo(`示范打乱完成 · ${width}×${height} · 块${cols}×${rows} · 密钥"1234"`, 'ok');
+    } catch (e) {
+      showDemo('示范失败：' + e.message, 'err');
+    }
+  });
+
+  $('btnDemoRound').addEventListener('click', async () => {
+    if (typeof ImgScramble === 'undefined') {
+      showDemo('ImgScramble 未加载，请检查 CDN 链接', 'err');
+      return;
+    }
+    if (!currentFile) {
+      showDemo('请先在上方选择一张图片', 'err');
+      return;
+    }
+    try {
+      const opts = { key: '1234', blockSize: 20, maxDim: 1024, permute: true, transform: true };
+      const s = await ImgScramble.scramble(currentFile, opts);
+      const r = await ImgScramble.restore(s.blob, opts);
+      drawTo(canvasResult, r.blob);
+      const u = URL.createObjectURL(r.blob);
+      downloadLink.href = u;
+      downloadLink.download = 'demo_restored.png';
+      downloadLink.style.display = 'inline-flex';
+      modeLabel.textContent = '(示范还原)';
+      showDemo(`往返完成 · 打乱${s.width}×${s.height} → 还原${r.width}×${r.height}`, 'ok');
+    } catch (e) {
+      showDemo('往返失败：' + e.message, 'err');
+    }
+  });
+
+  $('btnDemoCopy').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(IMPORT_CODE + '\n\n' + DEMO_CODE);
+      showDemo('已复制「引入 + 调用」完整代码', 'ok');
+    } catch {
+      showDemo('复制失败，请手动选择复制', 'err');
+    }
+  });
+})();
+</script>
+</body>
+</html>
