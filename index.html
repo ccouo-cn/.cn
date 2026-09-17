@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -253,25 +254,19 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="text-[14rem] font-bold text-pink-100 leading-none absolute -top-20 -left-8 -z-10 select-none stagger-item" style="--i:0">01</div>
 <h2 class="text-5xl md:text-6xl font-bold mb-8 text-gray-900 stagger-item" style="--i:1">KRKR 深度适配</h2>
 <p class="text-xl text-gray-600 mb-10 leading-loose stagger-item" style="--i:2">基于吉里吉里（KRKR）引擎深度优化，完美兼容各类视觉小说与同人作品。<br>低功耗、高帧率、无闪退。</p>
-<button onclick="showModal()" class="inline-block px-10 py-4 rounded-full border-2 border-pink-500 text-pink-500 text-sm font-semibold tracking-widest uppercase hover:bg-pink-500 hover:text-white transition-all duration-500 stagger-item cursor-pointer" style="--i:3">下载 Galdroid</button>
+<a href="/download" 
+   class="inline-block px-10 py-4 rounded-full border-2 border-pink-500 text-pink-500 text-sm font-semibold tracking-widest uppercase hover:bg-pink-500 hover:text-white transition-all duration-500 stagger-item cursor-pointer text-center"
+   style="--i:3">
+  下载 Galdroid
+</a>
+
 </div>
 <div class="hidden md:flex justify-end">
 <div class="text-pink-200 text-8xl font-light leading-tight select-none stagger-item" style="--i:2">➤<br>➤</div>
 </div>
 </div>
 </section>
-<div id="download-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
-<div class="bg-white rounded-3xl p-10 max-w-md mx-4 text-center shadow-2xl transform transition-all">
-<div class="text-4xl mb-4"></div>
-<h3 class="text-2xl font-bold text-gray-800 mb-2">游戏收录中</h3>
-<p class="text-red-500 font-semibold mb-8 flex items-center justify-center gap-2">
-<span>Error 404</span> 暂时不提供下载。
-</p>
-<button onclick="hideModal()" class="px-8 py-3 rounded-full bg-pink-500 text-white text-sm font-semibold tracking-widest uppercase hover:bg-pink-600 transition-all duration-300">
-            知道了
-</button>
-</div>
-</div>
+
 <script>
     function showModal() {
         document.getElementById('download-modal').classList.remove('hidden');
