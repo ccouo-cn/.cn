@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -300,18 +301,36 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 </section>
 </main>
-<footer class="bg-white border-t border-gray-100 py-16 footer-block">
-<div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
-<div class="flex items-center gap-4 mb-6 stagger-item" style="--i:0">
-<span class="bg-pink-50 text-pink-500 px-5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">合作</span>
-<a href="mailto:Q2020770@outlook.com" class="text-gray-400 hover:text-pink-500 transition-colors text-sm">Email Q2020770@outlook.com</a>
-</div>
-<div id="rows-wrapper" class="stagger-item" style="--i:1">
-<div class="container" id="icons-container"></div>
-</div>
-</div>
-</footer>
 
+<footer class="bg-white border-t border-gray-100 py-16 footer-block">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+    <div class="flex items-center gap-4 mb-6 stagger-item" style="--i:0">
+      <span class="bg-pink-50 text-pink-500 px-5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">合作</span>
+      <a href="mailto:Q2020770@outlook.com" class="text-gray-400 hover:text-pink-500 transition-colors text-sm">Email Q2020770@outlook.com</a>
+    </div>
+
+    <!-- 微信二维码：直接显示，大图 -->
+    <div class="flex flex-col items-center gap-3 mb-8 stagger-item" style="--i:1">
+      <div class="flex items-center gap-2 text-gray-500">
+        <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.5 4C4.91 4 2 6.46 2 9.5c0 1.74.94 3.29 2.42 4.31-.1.68-.38 1.77-.98 2.63-.15.22-.01.52.25.49 1.19-.14 2.24-.62 2.93-1.02.56.15 1.16.23 1.78.23.26 0 .51-.01.76-.04a5.55 5.55 0 0 1-.16-1.28c0-3.03 2.91-5.5 6.5-5.5.3 0 .6.02.89.05C15.96 5.84 12.58 4 8.5 4Z"/>
+          <path d="M16.5 8.5c-3.04 0-5.5 2.01-5.5 4.5s2.46 4.5 5.5 4.5c.53 0 1.04-.07 1.52-.19.58.34 1.48.74 2.46.85.22.02.34-.24.21-.42-.49-.72-.72-1.61-.8-2.18A4.35 4.35 0 0 0 22 13c0-2.49-2.46-4.5-5.5-4.5Z"/>
+        </svg>
+        <span class="text-sm font-medium">微信扫码联系</span>
+      </div>
+      <img
+        src="http://shp.qpic.cn/collector/2515952074/c4b949a5-c6ad-472d-9064-d3af509afa1b/0"
+        alt="微信二维码"
+        class="w-64 h-64 object-contain rounded-2xl shadow-sm border border-gray-100 bg-white p-2"
+        referrerpolicy="no-referrer"
+      >
+    </div>
+
+    <div id="rows-wrapper" class="stagger-item" style="--i:2">
+      <div class="container" id="icons-container"></div>
+    </div>
+  </div>
+</footer>
 <script>
 
 
